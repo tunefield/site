@@ -72,14 +72,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Tunefield — See your library, not just scroll it." },
+      { name: "description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
+      { name: "author", content: "Mark Burnett" },
+      { property: "og:title", content: "Tunefield — See your library, not just scroll it." },
+      { property: "og:description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
