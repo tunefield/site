@@ -184,4 +184,52 @@
     text-transform: uppercase;
     color: var(--teal);
   }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    font-size: clamp(3rem, 10vw, 10rem);
+  }
+  .prose-lede {
+    font-family: var(--font-sans);
+    font-size: clamp(1.05rem, 1.2vw, 1.25rem);
+    line-height: 1.7;
+    max-width: 65ch;
+  }
+  .pink-underline {
+    background-image: linear-gradient(transparent 62%, var(--pink) 62%, var(--pink) 88%, transparent 88%);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 0 0.05em;
+  }
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .btn-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 30%, rgba(236, 230, 216, 0.45) 50%, transparent 70%);
+    transform: translateX(-120%);
+    animation: sheen 6s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes sheen {
+    0%, 100% { transform: translateX(-120%); }
+    50% { transform: translateX(120%); }
+  }
+  .dashed-anim {
+    background-image: repeating-linear-gradient(90deg, var(--pink) 0 8px, transparent 8px 16px);
+    background-size: 200% 1px;
+    background-repeat: repeat-x;
+    background-position: 0 100%;
+    transition: background-position 0.6s ease;
+  }
+  .dashed-anim:hover { background-position: 100% 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-sheen::after { animation: none; }
+  }
 }

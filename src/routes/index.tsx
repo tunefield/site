@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Activity,
   Boxes,
@@ -14,6 +14,7 @@ import {
   Instagram,
   Linkedin,
   Music2,
+  Layers,
 } from "lucide-react";
 import {
   Accordion,
@@ -21,8 +22,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import heroSpheres from "@/assets/hero-spheres.png";
 import logo from "@/assets/tunefield-logo.png";
+import { LazyMatrix } from "@/components/LazyMatrix";
+import { motion, useInView, useScroll, useMotionValue, animate } from "framer-motion";
 
 export const Route = createFileRoute("/")({
   component: TunefieldLanding,
@@ -92,46 +94,65 @@ function Nav() {
 }
 
 function Hero() {
+  const STATS = [
+    "> scanning library...",
+    "> 1,247 tracks analyzed in 38 seconds",
+    "> 89 harmonic neighbors found for \"Strobe (Deadmau5)\"",
+    "> 0 cloud requests · 100% local",
+  ];
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => (t + 1) % STATS.length), 4000);
+    return () => clearInterval(id);
+  }, []);
   return (
     <section
       id="top"
       className="relative overflow-hidden bg-teal-deep text-cream pt-32 pb-24 md:pt-40 md:pb-32"
     >
       <div
-        className="absolute inset-y-0 right-0 w-full md:w-2/3 pointer-events-none"
+        className="absolute inset-0 md:inset-y-0 md:right-0 md:left-1/3"
         aria-hidden
       >
-        <img
-          src={heroSpheres}
-          alt=""
-          className="w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/80 to-transparent" />
+        <LazyMatrix count={80} />
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/85 to-transparent md:via-teal-deep/70 md:to-transparent pointer-events-none" />
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
-        <div className="md:col-span-7">
+        <div className="md:col-span-7 pointer-events-none [&_a]:pointer-events-auto">
           <p className="eyebrow">6-Dimensional music visualisation</p>
-          <h1 className="mt-6 font-display font-bold text-cream text-[clamp(2.75rem,7vw,6rem)]">
-            Tired of managing<br />
-            <span className="text-pink">lists?</span>
+          <h1 className="mt-6 hero-headline text-cream">
+            <span className="font-normal">Tired of managing</span>
+            <br />
+            <span className="font-bold text-pink">lists?</span>
           </h1>
-          <p className="mt-7 max-w-xl text-cream/80 text-lg md:text-xl leading-relaxed">
-            Teleport into a 6-dimensional music universe, defined by you. Fly through
-            your library — every track a star, positioned by BPM, key, mood, energy,
-            loudness, and danceability. Free, offline, instant. By a DJ + Ableton
-            Certified Trainer who got tired of scrolling.
+          <p className="mt-8 text-cream/85 prose-lede">
+            Teleport into a <span className="pink-underline text-charcoal">6-dimensional music universe</span>,
+            defined by you. Every track is a star — positioned by BPM, key, mood,
+            energy, loudness, danceability. Free, offline, instant.
           </p>
+          <div className="mt-6 font-mono text-[12px] text-cream/60 h-5 overflow-hidden">
+            <motion.div
+              key={tick}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              {STATS[tick]}
+            </motion.div>
+          </div>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
               href="#download"
-              className="inline-flex items-center gap-2 rounded-full bg-teal text-cream px-6 py-3 font-medium hover:bg-teal/90 transition-colors"
+              className="group relative inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-cream border border-cream/20 transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(180deg, #11A5B3, #0E8D99)" }}
             >
+              <span className="absolute -inset-2 -z-10 rounded-full bg-pink/0 group-hover:bg-pink/25 blur-xl transition-all duration-300" />
               Download free V1
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
               href="#waitlist"
-              className="inline-flex items-center gap-2 rounded-full border border-pink text-pink px-6 py-3 font-medium hover:bg-pink hover:text-charcoal transition-colors"
+              className="dashed-anim inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-pink hover:text-charcoal hover:bg-pink/90 transition-colors border border-transparent"
             >
               Join V2 waitlist
             </a>
@@ -202,7 +223,7 @@ const FEATURES = [
   {
     icon: Boxes,
     title: "6D Neural Matrix",
-    body: "Every track is a star in a 6-dimensional universe — position, color, size, time. Fly through it. Click to play.",
+    body: "Every track is a star in a 6-dimensional universe — X, Y, Z, color, size, texture. Fly through it. Click to play.",
   },
   {
     icon: Library,
@@ -222,108 +243,169 @@ const FEATURES = [
 ];
 
 function Features() {
+  const cards = [
+    ...FEATURES,
+    {
+      icon: Layers,
+      title: "Texture channel",
+      body: "A sixth visual dimension. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Roughness becomes meaning.",
+      v2: true,
+    },
+  ];
   return (
     <Section id="features" dark>
       <h2 className="max-w-3xl text-4xl md:text-6xl font-display font-bold">
-        Six things,{" "}
+        Seven things,{" "}
         <span className="relative inline-block">
           done well.
           <span className="absolute left-0 -bottom-2 h-[6px] w-full bg-pink rounded-full" />
         </span>
       </h2>
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-cream/10 rounded-2xl overflow-hidden">
-        {FEATURES.map(({ icon: Icon, title, body }) => (
-          <div key={title} className="bg-teal-deep p-8 md:p-10 flex flex-col gap-4">
-            <Icon className="h-7 w-7 text-teal" strokeWidth={1.5} />
-            <h3 className="font-display font-semibold text-cream text-xl">{title}</h3>
-            <p className="text-cream/70 leading-relaxed">{body}</p>
-          </div>
+      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {cards.slice(0, 4).map((c) => (
+          <FeatureCard key={c.title} {...c} />
         ))}
+        <div className="hidden lg:block" />
+        {cards.slice(4, 6).map((c) => (
+          <FeatureCard key={c.title} {...c} />
+        ))}
+        <div className="hidden lg:block" />
+        <div className="lg:col-span-4 flex justify-center">
+          <div className="w-full lg:w-1/3">
+            <FeatureCard {...cards[6]} featured />
+          </div>
+        </div>
       </div>
     </Section>
+  );
+}
+
+function FeatureCard({
+  icon: Icon,
+  title,
+  body,
+  v2,
+  featured,
+}: {
+  icon: typeof Activity;
+  title: string;
+  body: string;
+  v2?: boolean;
+  featured?: boolean;
+}) {
+  return (
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      className={`relative group bg-teal-deep p-8 md:p-10 flex flex-col gap-4 rounded-2xl border ${
+        featured ? "border-pink/40" : "border-cream/10"
+      } hover:shadow-[0_20px_60px_-20px_rgba(17,165,179,0.5)] transition-shadow`}
+    >
+      {v2 && (
+        <span className="absolute top-4 right-4 text-[10px] font-mono uppercase tracking-widest bg-pink text-charcoal px-2 py-0.5 rounded-full">
+          V2
+        </span>
+      )}
+      <Icon
+        className="h-7 w-7 text-teal transition-transform group-hover:scale-110 group-hover:rotate-6"
+        strokeWidth={1.5}
+      />
+      <h3 className="font-display font-semibold text-cream text-xl">{title}</h3>
+      <p className="text-cream/70 leading-relaxed">{body}</p>
+    </motion.div>
   );
 }
 
 function MatrixSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const stages = [
+    { range: [0, 0.25], caption: "Position — X / Y / Z is any metric you pick." },
+    { range: [0.25, 0.5], caption: "Color — mood, key, genre, painted across the field." },
+    { range: [0.5, 0.75], caption: "Edges — what mixes with what, drawn between stars." },
+    { range: [0.75, 1.0], caption: "High Vis — the closest star is your next mix." },
+  ];
+  const [stage, setStage] = useState(0);
+  useEffect(() => {
+    return scrollYProgress.on("change", (v) => {
+      const idx = stages.findIndex(({ range }) => v >= range[0] && v < range[1]);
+      setStage(idx === -1 ? stages.length - 1 : idx);
+    });
+  }, [scrollYProgress]);
   return (
-    <Section id="matrix">
-      <p className="eyebrow">The 6D Neural Matrix</p>
-      <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold">
-        Six dimensions. One universe.{" "}
-        <span className="text-teal">Your library.</span>
-      </h2>
-      <div className="mt-14 rounded-3xl overflow-hidden bg-teal-deep aspect-[16/9] relative">
-        <MatrixVisualization />
-      </div>
-      <div className="mt-12 grid md:grid-cols-3 gap-8">
-        {[
-          ["3 axes", "X / Y / Z — pick any metric for each spatial dimension"],
-          ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
-          ["Time", "The 6th dimension — fly through, watch sets unfold"],
-        ].map(([k, v]) => (
-          <div key={k}>
-            <div className="font-mono text-sm text-teal">{k}</div>
-            <p className="mt-2 text-charcoal/75">{v}</p>
+    <section id="matrix" ref={ref} className="relative bg-cream" style={{ height: "200vh" }}>
+      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 pt-24 w-full">
+          <p className="eyebrow">The 6D Neural Matrix</p>
+          <h2 className="mt-4 max-w-4xl text-3xl md:text-5xl font-display font-bold text-charcoal">
+            Six dimensions. One universe.{" "}
+            <span className="pink-underline text-charcoal">Your library.</span>
+          </h2>
+        </div>
+        <div className="relative flex-1 mt-6 mx-4 md:mx-8 rounded-3xl overflow-hidden bg-teal-deep">
+          <LazyMatrix count={90} showTooltip={false} />
+          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 bg-gradient-to-t from-teal-deep via-teal-deep/70 to-transparent">
+            <motion.p
+              key={stage}
+              initial={{ y: 18, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.45 }}
+              className="font-display font-semibold text-cream text-2xl md:text-3xl max-w-3xl"
+            >
+              {stages[stage].caption}
+            </motion.p>
+            <div className="mt-4 flex gap-1.5">
+              {stages.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1 flex-1 rounded-full ${i <= stage ? "bg-pink" : "bg-cream/15"}`}
+                />
+              ))}
+            </div>
           </div>
-        ))}
+        </div>
       </div>
-      <p className="mt-10 max-w-3xl text-lg text-charcoal/75">
-        Plus "High Vis" mode — fade every track that isn't compatible with your current
-        selection. Suddenly the next mix isn't a guess. It's the closest star.
-      </p>
-    </Section>
+      <div className="bg-cream">
+        <div className="mx-auto max-w-7xl px-6 py-20 grid md:grid-cols-3 gap-8">
+          {[
+            ["X / Y / Z", "Three spatial axes — pick any metric for each"],
+            ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
+            ["Texture (V2)", "The sixth dimension — surface material per sphere"],
+          ].map(([k, v]) => (
+            <div key={k}>
+              <div className="font-mono text-sm text-teal">{k}</div>
+              <p className="mt-2 text-charcoal/75">{v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-function MatrixVisualization() {
-  // decorative SVG stand-in for the screenshot
-  const nodes = Array.from({ length: 60 }).map((_, i) => {
-    const seed = (i * 9301 + 49297) % 233280;
-    const r = seed / 233280;
-    const seed2 = ((i + 17) * 1103515245 + 12345) % 2147483647;
-    const r2 = (seed2 % 1000) / 1000;
-    return {
-      cx: 6 + r * 88,
-      cy: 8 + r2 * 84,
-      r: 0.6 + ((i % 7) / 7) * 1.6,
-      c: i % 3,
+function DimensionCounter() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const mv = useMotionValue(0);
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(mv, 6, { duration: 1.6, ease: "easeOut" });
+    const unsub = mv.on("change", (v) => setVal(Math.round(v)));
+    return () => {
+      controls.stop();
+      unsub();
     };
-  });
-  const colors = ["#11A5B3", "#F5B3D1", "#ECE6D8"];
+  }, [inView, mv]);
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#11A5B3" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#0E2A2A" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <rect width="100" height="100" fill="#0E2A2A" />
-      <circle cx="50" cy="50" r="55" fill="url(#glow)" />
-      {nodes.flatMap((n, i) =>
-        nodes.slice(i + 1, i + 3).map((m, j) => {
-          const dx = n.cx - m.cx;
-          const dy = n.cy - m.cy;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d > 22) return null;
-          return (
-            <line
-              key={`${i}-${j}`}
-              x1={n.cx}
-              y1={n.cy}
-              x2={m.cx}
-              y2={m.cy}
-              stroke="#11A5B3"
-              strokeWidth="0.15"
-              strokeOpacity="0.35"
-            />
-          );
-        }),
-      )}
-      {nodes.map((n, i) => (
-        <circle key={i} cx={n.cx} cy={n.cy} r={n.r} fill={colors[n.c]} fillOpacity="0.9" />
-      ))}
-    </svg>
+    <div ref={ref} className="flex flex-col items-center text-center">
+      <div className="font-display font-bold text-pink leading-none" style={{ fontSize: "clamp(6rem, 14vw, 12rem)" }}>
+        {val}
+      </div>
+      <p className="mt-4 max-w-xl text-cream/75 text-lg">
+        Six dimensions of musical meaning. One sphere at a time.
+      </p>
+    </div>
   );
 }
 
@@ -334,18 +416,30 @@ function V2Vision() {
       <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold text-cream">
         You are the current node. The music universe is around you.
       </h2>
-      <div className="mt-14 grid md:grid-cols-2 gap-10">
+      <div className="mt-16">
+        <DimensionCounter />
+      </div>
+      <div className="mt-16 grid md:grid-cols-3 gap-10">
         <div className="border-l-2 border-pink pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-pink mb-2">VR mode</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            VR mode. WebXR-powered. Stand inside your library. Mixable tracks orbit you.
-            Look at one to play it. Reach out to mix it.
+            WebXR-powered. Stand inside your library. Mixable tracks orbit you. Look at one
+            to play it. Reach out to mix it.
           </p>
         </div>
         <div className="border-l-2 border-teal pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-teal mb-2">Texture channel</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            Distributor integration. Browse Beatport, Bandcamp, Traxsource without leaving
-            Tunefield. Buy tracks that land straight into your catalog. Affiliate-funded,
-            so V1 stays free.
+            Six visual dimensions instead of five. Every sphere gains a surface material —
+            roughness, glow, pattern, crystalline structure — driven by any metric you
+            choose. The matrix stops being abstract and starts feeling tactile.
+          </p>
+        </div>
+        <div className="border-l-2 border-cream/40 pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-cream/70 mb-2">Distributor integration</div>
+          <p className="text-cream/85 text-lg leading-relaxed">
+            Browse Beatport, Bandcamp, Traxsource without leaving Tunefield. Buy straight
+            into your catalog. Affiliate-funded so V1 stays free forever.
           </p>
         </div>
       </div>
@@ -360,9 +454,11 @@ function V2Vision() {
 }
 
 function Pricing() {
-  const plans = [
+  const [tier, setTier] = useState<"solo" | "studio" | "enterprise">("solo");
+  const allPlans = [
     {
       name: "Free",
+      audience: "solo",
       price: "€0",
       period: "forever",
       features:
@@ -374,6 +470,7 @@ function Pricing() {
     },
     {
       name: "Pro",
+      audience: "solo",
       price: "€79",
       period: "one-time, lifetime license",
       features:
@@ -385,6 +482,7 @@ function Pricing() {
     },
     {
       name: "Studio",
+      audience: "studio",
       price: "€15/mo",
       period: "or €150/yr",
       features:
@@ -394,17 +492,57 @@ function Pricing() {
       soon: true,
       featured: false,
     },
+    {
+      name: "Studio+",
+      audience: "studio",
+      price: "€39/mo",
+      period: "unlimited seats",
+      features: "Unlimited team seats, shared crates, role-based access, SSO.",
+      cta: "Notify me",
+      ctaHref: "#waitlist",
+      soon: true,
+      featured: false,
+    },
+    {
+      name: "Enterprise",
+      audience: "enterprise",
+      price: "Custom",
+      period: "white-glove",
+      features: "Festivals, broadcasters, libraries. Self-hosted option, custom analysis pipeline.",
+      cta: "Contact us",
+      ctaHref: "mailto:hello@tunefield.app",
+      soon: true,
+      featured: false,
+    },
   ];
+  const plans = allPlans.filter((p) => p.audience === tier || (tier === "solo" && p.audience === "solo"));
   return (
     <Section id="pricing">
       <p className="eyebrow">Pricing</p>
       <h2 className="mt-6 max-w-3xl text-4xl md:text-6xl font-display font-bold">
         Free forever, with room to grow.
       </h2>
+      <div className="mt-10 inline-flex p-1 rounded-full bg-cream-warm border border-charcoal/10">
+        {(["solo", "studio", "enterprise"] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTier(t)}
+            className={`px-5 py-2 rounded-full text-sm font-medium capitalize transition-colors ${
+              tier === t ? "bg-teal text-cream" : "text-charcoal/70 hover:text-charcoal"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
       <div className="mt-14 grid md:grid-cols-3 gap-6">
         {plans.map((p) => (
-          <div
+          <motion.div
             key={p.name}
+            layout
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
             className={`rounded-3xl p-8 flex flex-col border ${
               p.featured
                 ? "bg-teal-deep text-cream border-teal-deep"
@@ -432,13 +570,13 @@ function Pricing() {
               href={p.ctaHref}
               className={`mt-8 inline-flex justify-center items-center rounded-full px-5 py-3 font-medium transition-colors ${
                 p.featured
-                  ? "bg-pink text-charcoal hover:bg-pink/90"
+                  ? "btn-sheen bg-pink text-charcoal hover:bg-pink/90"
                   : "bg-teal text-cream hover:bg-teal/90"
               }`}
             >
               {p.cta}
             </a>
-          </div>
+          </motion.div>
         ))}
       </div>
       <p className="mt-8 text-sm text-charcoal/60 max-w-2xl">
@@ -466,6 +604,16 @@ function About() {
             Tunefield exists because the tool he wanted didn't exist. He's been organising
             DJ libraries for 20 years; this is the workflow that finally clicks.
           </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {["Ableton Certified Trainer", "20 years DJing", "Based in Germany 🇩🇪"].map((chip) => (
+              <span
+                key={chip}
+                className="inline-flex items-center text-sm bg-cream-warm text-charcoal border-l-2 border-teal pl-3 pr-4 py-1.5 rounded-r-md"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
           <p className="mt-6 text-sm text-charcoal/60 font-mono">
             Built solo. AGPL-v3 licensed. Co-developed with{" "}
             <a
@@ -536,9 +684,14 @@ function FAQ() {
 function Waitlist() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const count = 1247;
   return (
-    <section id="waitlist" className="bg-teal-deep text-cream py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-6 text-center">
+    <section id="waitlist" className="relative overflow-hidden bg-teal-deep text-cream py-24 md:py-32">
+      <div className="absolute inset-0 opacity-25 pointer-events-none">
+        <LazyMatrix count={70} showTooltip={false} />
+      </div>
+      <div className="absolute inset-0 bg-teal-deep/30 pointer-events-none" />
+      <div className="relative mx-auto max-w-4xl px-6 text-center">
         <h2 className="text-4xl md:text-6xl font-display font-bold text-cream">
           Be first when V2 ships.
         </h2>
@@ -553,7 +706,7 @@ function Waitlist() {
             e.preventDefault();
             if (email.trim()) setSubmitted(true);
           }}
-          className="mt-10 flex flex-col sm:flex-row gap-3 max-w-xl mx-auto"
+          className="mt-10 flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto items-stretch"
         >
           <label htmlFor="waitlist-email" className="sr-only">
             Email address
@@ -565,15 +718,30 @@ function Waitlist() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@studio.com"
-            className="flex-1 rounded-full bg-cream text-charcoal px-6 py-4 placeholder:text-charcoal/40 focus:outline-none focus:ring-2 focus:ring-pink"
+            className="flex-1 bg-transparent text-cream text-lg px-2 py-4 border-b-2 border-teal placeholder:text-cream/40 focus:outline-none focus:border-pink transition-colors"
+            style={{ minHeight: 60 }}
           />
           <button
             type="submit"
-            className="rounded-full bg-pink text-charcoal font-medium px-6 py-4 hover:bg-pink/90 transition-colors inline-flex items-center justify-center gap-2"
+            className="group rounded-full bg-pink text-charcoal font-medium px-7 py-4 hover:bg-pink/90 transition-colors inline-flex items-center justify-center gap-2"
           >
-            {submitted ? "You're in ✓" : "Join the waitlist →"}
+            {submitted ? "You're in ✓" : (<>Join the waitlist <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></>)}
           </button>
         </form>
+        <div className="mt-10 max-w-md mx-auto">
+          <div className="flex items-center gap-3 text-cream/80 text-sm font-mono">
+            <div className="flex-1 h-1.5 bg-cream/10 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${Math.min(100, (count / 2000) * 100)}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                className="h-full bg-teal"
+              />
+            </div>
+            <span>{count.toLocaleString()} DJs on the waitlist</span>
+          </div>
+        </div>
         <p className="mt-4 text-sm text-cream/50">
           No spam. One email when V2 ships. Unsubscribe in one click.
         </p>
@@ -585,6 +753,9 @@ function Waitlist() {
 function Footer() {
   return (
     <footer className="bg-cream border-t border-charcoal/10 py-16">
+      <div className="mx-auto max-w-7xl px-6 mb-8 font-mono text-xs text-charcoal/40">
+        // the field is listening
+      </div>
       <div className="mx-auto max-w-7xl px-6 grid md:grid-cols-3 gap-10">
         <div>
           <Wordmark />
