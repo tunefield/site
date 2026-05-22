@@ -224,7 +224,7 @@ const FEATURES = [
   {
     icon: Boxes,
     title: "6D Neural Matrix",
-    body: "Every track is a star in a 6-dimensional universe — position, color, size, time. Fly through it. Click to play.",
+    body: "Every track is a star in a 6-dimensional universe — X, Y, Z, color, size, texture. Fly through it. Click to play.",
   },
   {
     icon: Library,
@@ -244,56 +244,143 @@ const FEATURES = [
 ];
 
 function Features() {
+  const cards = [
+    ...FEATURES,
+    {
+      icon: Layers,
+      title: "Texture channel",
+      body: "A sixth visual dimension. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Roughness becomes meaning.",
+      v2: true,
+    },
+  ];
   return (
     <Section id="features" dark>
       <h2 className="max-w-3xl text-4xl md:text-6xl font-display font-bold">
-        Six things,{" "}
+        Seven things,{" "}
         <span className="relative inline-block">
           done well.
           <span className="absolute left-0 -bottom-2 h-[6px] w-full bg-pink rounded-full" />
         </span>
       </h2>
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-cream/10 rounded-2xl overflow-hidden">
-        {FEATURES.map(({ icon: Icon, title, body }) => (
-          <div key={title} className="bg-teal-deep p-8 md:p-10 flex flex-col gap-4">
-            <Icon className="h-7 w-7 text-teal" strokeWidth={1.5} />
-            <h3 className="font-display font-semibold text-cream text-xl">{title}</h3>
-            <p className="text-cream/70 leading-relaxed">{body}</p>
-          </div>
+      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {cards.slice(0, 4).map((c) => (
+          <FeatureCard key={c.title} {...c} />
         ))}
+        <div className="hidden lg:block" />
+        {cards.slice(4, 6).map((c) => (
+          <FeatureCard key={c.title} {...c} />
+        ))}
+        <div className="hidden lg:block" />
+        <div className="lg:col-span-4 flex justify-center">
+          <div className="w-full lg:w-1/3">
+            <FeatureCard {...cards[6]} featured />
+          </div>
+        </div>
       </div>
     </Section>
   );
 }
 
-function MatrixSection() {
+function FeatureCard({
+  icon: Icon,
+  title,
+  body,
+  v2,
+  featured,
+}: {
+  icon: typeof Activity;
+  title: string;
+  body: string;
+  v2?: boolean;
+  featured?: boolean;
+}) {
   return (
-    <Section id="matrix">
-      <p className="eyebrow">The 6D Neural Matrix</p>
-      <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold">
-        Six dimensions. One universe.{" "}
-        <span className="text-teal">Your library.</span>
-      </h2>
-      <div className="mt-14 rounded-3xl overflow-hidden bg-teal-deep aspect-[16/9] relative">
-        <MatrixVisualization />
-      </div>
-      <div className="mt-12 grid md:grid-cols-3 gap-8">
-        {[
-          ["3 axes", "X / Y / Z — pick any metric for each spatial dimension"],
-          ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
-          ["Time", "The 6th dimension — fly through, watch sets unfold"],
-        ].map(([k, v]) => (
-          <div key={k}>
-            <div className="font-mono text-sm text-teal">{k}</div>
-            <p className="mt-2 text-charcoal/75">{v}</p>
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+      className={`relative group bg-teal-deep p-8 md:p-10 flex flex-col gap-4 rounded-2xl border ${
+        featured ? "border-pink/40" : "border-cream/10"
+      } hover:shadow-[0_20px_60px_-20px_rgba(17,165,179,0.5)] transition-shadow`}
+    >
+      {v2 && (
+        <span className="absolute top-4 right-4 text-[10px] font-mono uppercase tracking-widest bg-pink text-charcoal px-2 py-0.5 rounded-full">
+          V2
+        </span>
+      )}
+      <Icon
+        className="h-7 w-7 text-teal transition-transform group-hover:scale-110 group-hover:rotate-6"
+        strokeWidth={1.5}
+      />
+      <h3 className="font-display font-semibold text-cream text-xl">{title}</h3>
+      <p className="text-cream/70 leading-relaxed">{body}</p>
+    </motion.div>
+  );
+}
+
+function MatrixSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const stages = [
+    { range: [0, 0.25], caption: "Position — X / Y / Z is any metric you pick." },
+    { range: [0.25, 0.5], caption: "Color — mood, key, genre, painted across the field." },
+    { range: [0.5, 0.75], caption: "Edges — what mixes with what, drawn between stars." },
+    { range: [0.75, 1.0], caption: "High Vis — the closest star is your next mix." },
+  ];
+  const [stage, setStage] = useState(0);
+  useEffect(() => {
+    return scrollYProgress.on("change", (v) => {
+      const idx = stages.findIndex(({ range }) => v >= range[0] && v < range[1]);
+      setStage(idx === -1 ? stages.length - 1 : idx);
+    });
+  }, [scrollYProgress]);
+  return (
+    <section id="matrix" ref={ref} className="relative bg-cream" style={{ height: "200vh" }}>
+      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
+        <div className="mx-auto max-w-7xl px-6 pt-24 w-full">
+          <p className="eyebrow">The 6D Neural Matrix</p>
+          <h2 className="mt-4 max-w-4xl text-3xl md:text-5xl font-display font-bold text-charcoal">
+            Six dimensions. One universe.{" "}
+            <span className="pink-underline text-charcoal">Your library.</span>
+          </h2>
+        </div>
+        <div className="relative flex-1 mt-6 mx-4 md:mx-8 rounded-3xl overflow-hidden bg-teal-deep">
+          <LazyMatrix count={90} showTooltip={false} />
+          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 bg-gradient-to-t from-teal-deep via-teal-deep/70 to-transparent">
+            <motion.p
+              key={stage}
+              initial={{ y: 18, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.45 }}
+              className="font-display font-semibold text-cream text-2xl md:text-3xl max-w-3xl"
+            >
+              {stages[stage].caption}
+            </motion.p>
+            <div className="mt-4 flex gap-1.5">
+              {stages.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1 flex-1 rounded-full ${i <= stage ? "bg-pink" : "bg-cream/15"}`}
+                />
+              ))}
+            </div>
           </div>
-        ))}
+        </div>
       </div>
-      <p className="mt-10 max-w-3xl text-lg text-charcoal/75">
-        Plus "High Vis" mode — fade every track that isn't compatible with your current
-        selection. Suddenly the next mix isn't a guess. It's the closest star.
-      </p>
-    </Section>
+      <div className="bg-cream">
+        <div className="mx-auto max-w-7xl px-6 py-20 grid md:grid-cols-3 gap-8">
+          {[
+            ["X / Y / Z", "Three spatial axes — pick any metric for each"],
+            ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
+            ["Texture (V2)", "The sixth dimension — surface material per sphere"],
+          ].map(([k, v]) => (
+            <div key={k}>
+              <div className="font-mono text-sm text-teal">{k}</div>
+              <p className="mt-2 text-charcoal/75">{v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
