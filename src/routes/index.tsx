@@ -14,6 +14,7 @@ import {
   Instagram,
   Linkedin,
   Music2,
+  Layers,
 } from "lucide-react";
 import {
   Accordion,
@@ -21,8 +22,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import heroSpheres from "@/assets/hero-spheres.png";
 import logo from "@/assets/tunefield-logo.png";
+import { LazyMatrix } from "@/components/LazyMatrix";
+import { motion, useInView, useScroll, useTransform, useMotionValue, animate } from "framer-motion";
+import { useRef } from "react";
 
 export const Route = createFileRoute("/")({
   component: TunefieldLanding,
