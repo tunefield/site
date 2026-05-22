@@ -76,9 +76,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
       { name: "author", content: "Mark Burnett" },
       { property: "og:title", content: "Tunefield — See your library, not just scroll it." },
-      { property: "og:description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix." },
+      { property: "og:description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Tunefield — See your library, not just scroll it." },
+      { name: "twitter:description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/58348dbb-5b27-403e-a6b5-cd59057817f4/id-preview-f72fd77c--04bfb823-ea90-469d-84d2-59b163c6029b.lovable.app-1779380366214.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/58348dbb-5b27-403e-a6b5-cd59057817f4/id-preview-f72fd77c--04bfb823-ea90-469d-84d2-59b163c6029b.lovable.app-1779380366214.png" },
     ],
     links: [
       {
