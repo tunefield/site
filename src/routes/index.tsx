@@ -685,9 +685,14 @@ function FAQ() {
 function Waitlist() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const count = 1247;
   return (
-    <section id="waitlist" className="bg-teal-deep text-cream py-24 md:py-32">
-      <div className="mx-auto max-w-4xl px-6 text-center">
+    <section id="waitlist" className="relative overflow-hidden bg-teal-deep text-cream py-24 md:py-32">
+      <div className="absolute inset-0 opacity-25 pointer-events-none">
+        <LazyMatrix count={70} showTooltip={false} />
+      </div>
+      <div className="absolute inset-0 bg-teal-deep/30 pointer-events-none" />
+      <div className="relative mx-auto max-w-4xl px-6 text-center">
         <h2 className="text-4xl md:text-6xl font-display font-bold text-cream">
           Be first when V2 ships.
         </h2>
@@ -702,7 +707,7 @@ function Waitlist() {
             e.preventDefault();
             if (email.trim()) setSubmitted(true);
           }}
-          className="mt-10 flex flex-col sm:flex-row gap-3 max-w-xl mx-auto"
+          className="mt-10 flex flex-col sm:flex-row gap-3 max-w-2xl mx-auto items-stretch"
         >
           <label htmlFor="waitlist-email" className="sr-only">
             Email address
@@ -714,15 +719,30 @@ function Waitlist() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@studio.com"
-            className="flex-1 rounded-full bg-cream text-charcoal px-6 py-4 placeholder:text-charcoal/40 focus:outline-none focus:ring-2 focus:ring-pink"
+            className="flex-1 bg-transparent text-cream text-lg px-2 py-4 border-b-2 border-teal placeholder:text-cream/40 focus:outline-none focus:border-pink transition-colors"
+            style={{ minHeight: 60 }}
           />
           <button
             type="submit"
-            className="rounded-full bg-pink text-charcoal font-medium px-6 py-4 hover:bg-pink/90 transition-colors inline-flex items-center justify-center gap-2"
+            className="group rounded-full bg-pink text-charcoal font-medium px-7 py-4 hover:bg-pink/90 transition-colors inline-flex items-center justify-center gap-2"
           >
-            {submitted ? "You're in ✓" : "Join the waitlist →"}
+            {submitted ? "You're in ✓" : (<>Join the waitlist <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></>)}
           </button>
         </form>
+        <div className="mt-10 max-w-md mx-auto">
+          <div className="flex items-center gap-3 text-cream/80 text-sm font-mono">
+            <div className="flex-1 h-1.5 bg-cream/10 rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: `${Math.min(100, (count / 2000) * 100)}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                className="h-full bg-teal"
+              />
+            </div>
+            <span>{count.toLocaleString()} DJs on the waitlist</span>
+          </div>
+        </div>
         <p className="mt-4 text-sm text-cream/50">
           No spam. One email when V2 ships. Unsubscribe in one click.
         </p>
@@ -734,6 +754,9 @@ function Waitlist() {
 function Footer() {
   return (
     <footer className="bg-cream border-t border-charcoal/10 py-16">
+      <div className="mx-auto max-w-7xl px-6 mb-8 font-mono text-xs text-charcoal/40">
+        // the field is listening
+      </div>
       <div className="mx-auto max-w-7xl px-6 grid md:grid-cols-3 gap-10">
         <div>
           <Wordmark />
