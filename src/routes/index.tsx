@@ -384,55 +384,29 @@ function MatrixSection() {
   );
 }
 
-function MatrixVisualization() {
-  // decorative SVG stand-in for the screenshot
-  const nodes = Array.from({ length: 60 }).map((_, i) => {
-    const seed = (i * 9301 + 49297) % 233280;
-    const r = seed / 233280;
-    const seed2 = ((i + 17) * 1103515245 + 12345) % 2147483647;
-    const r2 = (seed2 % 1000) / 1000;
-    return {
-      cx: 6 + r * 88,
-      cy: 8 + r2 * 84,
-      r: 0.6 + ((i % 7) / 7) * 1.6,
-      c: i % 3,
+function DimensionCounter() {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-100px" });
+  const mv = useMotionValue(0);
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(mv, 6, { duration: 1.6, ease: "easeOut" });
+    const unsub = mv.on("change", (v) => setVal(Math.round(v)));
+    return () => {
+      controls.stop();
+      unsub();
     };
-  });
-  const colors = ["#11A5B3", "#F5B3D1", "#ECE6D8"];
+  }, [inView, mv]);
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#11A5B3" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="#0E2A2A" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <rect width="100" height="100" fill="#0E2A2A" />
-      <circle cx="50" cy="50" r="55" fill="url(#glow)" />
-      {nodes.flatMap((n, i) =>
-        nodes.slice(i + 1, i + 3).map((m, j) => {
-          const dx = n.cx - m.cx;
-          const dy = n.cy - m.cy;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d > 22) return null;
-          return (
-            <line
-              key={`${i}-${j}`}
-              x1={n.cx}
-              y1={n.cy}
-              x2={m.cx}
-              y2={m.cy}
-              stroke="#11A5B3"
-              strokeWidth="0.15"
-              strokeOpacity="0.35"
-            />
-          );
-        }),
-      )}
-      {nodes.map((n, i) => (
-        <circle key={i} cx={n.cx} cy={n.cy} r={n.r} fill={colors[n.c]} fillOpacity="0.9" />
-      ))}
-    </svg>
+    <div ref={ref} className="flex flex-col items-center text-center">
+      <div className="font-display font-bold text-pink leading-none" style={{ fontSize: "clamp(6rem, 14vw, 12rem)" }}>
+        {val}
+      </div>
+      <p className="mt-4 max-w-xl text-cream/75 text-lg">
+        Six dimensions of musical meaning. One sphere at a time.
+      </p>
+    </div>
   );
 }
 
@@ -443,18 +417,30 @@ function V2Vision() {
       <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold text-cream">
         You are the current node. The music universe is around you.
       </h2>
-      <div className="mt-14 grid md:grid-cols-2 gap-10">
+      <div className="mt-16">
+        <DimensionCounter />
+      </div>
+      <div className="mt-16 grid md:grid-cols-3 gap-10">
         <div className="border-l-2 border-pink pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-pink mb-2">VR mode</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            VR mode. WebXR-powered. Stand inside your library. Mixable tracks orbit you.
-            Look at one to play it. Reach out to mix it.
+            WebXR-powered. Stand inside your library. Mixable tracks orbit you. Look at one
+            to play it. Reach out to mix it.
           </p>
         </div>
         <div className="border-l-2 border-teal pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-teal mb-2">Texture channel</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            Distributor integration. Browse Beatport, Bandcamp, Traxsource without leaving
-            Tunefield. Buy tracks that land straight into your catalog. Affiliate-funded,
-            so V1 stays free.
+            Six visual dimensions instead of five. Every sphere gains a surface material —
+            roughness, glow, pattern, crystalline structure — driven by any metric you
+            choose. The matrix stops being abstract and starts feeling tactile.
+          </p>
+        </div>
+        <div className="border-l-2 border-cream/40 pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-cream/70 mb-2">Distributor integration</div>
+          <p className="text-cream/85 text-lg leading-relaxed">
+            Browse Beatport, Bandcamp, Traxsource without leaving Tunefield. Buy straight
+            into your catalog. Affiliate-funded so V1 stays free forever.
           </p>
         </div>
       </div>
@@ -469,9 +455,11 @@ function V2Vision() {
 }
 
 function Pricing() {
-  const plans = [
+  const [tier, setTier] = useState<"solo" | "studio" | "enterprise">("solo");
+  const allPlans = [
     {
       name: "Free",
+      audience: "solo",
       price: "€0",
       period: "forever",
       features:
@@ -483,6 +471,7 @@ function Pricing() {
     },
     {
       name: "Pro",
+      audience: "solo",
       price: "€79",
       period: "one-time, lifetime license",
       features:
@@ -494,6 +483,7 @@ function Pricing() {
     },
     {
       name: "Studio",
+      audience: "studio",
       price: "€15/mo",
       period: "or €150/yr",
       features:
@@ -503,17 +493,57 @@ function Pricing() {
       soon: true,
       featured: false,
     },
+    {
+      name: "Studio+",
+      audience: "studio",
+      price: "€39/mo",
+      period: "unlimited seats",
+      features: "Unlimited team seats, shared crates, role-based access, SSO.",
+      cta: "Notify me",
+      ctaHref: "#waitlist",
+      soon: true,
+      featured: false,
+    },
+    {
+      name: "Enterprise",
+      audience: "enterprise",
+      price: "Custom",
+      period: "white-glove",
+      features: "Festivals, broadcasters, libraries. Self-hosted option, custom analysis pipeline.",
+      cta: "Contact us",
+      ctaHref: "mailto:hello@tunefield.app",
+      soon: true,
+      featured: false,
+    },
   ];
+  const plans = allPlans.filter((p) => p.audience === tier || (tier === "solo" && p.audience === "solo"));
   return (
     <Section id="pricing">
       <p className="eyebrow">Pricing</p>
       <h2 className="mt-6 max-w-3xl text-4xl md:text-6xl font-display font-bold">
         Free forever, with room to grow.
       </h2>
+      <div className="mt-10 inline-flex p-1 rounded-full bg-cream-warm border border-charcoal/10">
+        {(["solo", "studio", "enterprise"] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTier(t)}
+            className={`px-5 py-2 rounded-full text-sm font-medium capitalize transition-colors ${
+              tier === t ? "bg-teal text-cream" : "text-charcoal/70 hover:text-charcoal"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
       <div className="mt-14 grid md:grid-cols-3 gap-6">
         {plans.map((p) => (
-          <div
+          <motion.div
             key={p.name}
+            layout
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
             className={`rounded-3xl p-8 flex flex-col border ${
               p.featured
                 ? "bg-teal-deep text-cream border-teal-deep"
@@ -541,13 +571,13 @@ function Pricing() {
               href={p.ctaHref}
               className={`mt-8 inline-flex justify-center items-center rounded-full px-5 py-3 font-medium transition-colors ${
                 p.featured
-                  ? "bg-pink text-charcoal hover:bg-pink/90"
+                  ? "btn-sheen bg-pink text-charcoal hover:bg-pink/90"
                   : "bg-teal text-cream hover:bg-teal/90"
               }`}
             >
               {p.cta}
             </a>
-          </div>
+          </motion.div>
         ))}
       </div>
       <p className="mt-8 text-sm text-charcoal/60 max-w-2xl">
