@@ -247,19 +247,19 @@ function Features() {
 function MatrixSection() {
   return (
     <Section id="matrix">
-      <p className="eyebrow">The Neural Matrix</p>
+      <p className="eyebrow">The 6D Neural Matrix</p>
       <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold">
-        Every track. Every connection. Every mood.{" "}
-        <span className="text-teal">At a glance.</span>
+        Six dimensions. One universe.{" "}
+        <span className="text-teal">Your library.</span>
       </h2>
       <div className="mt-14 rounded-3xl overflow-hidden bg-teal-deep aspect-[16/9] relative">
         <MatrixVisualization />
       </div>
       <div className="mt-12 grid md:grid-cols-3 gap-8">
         {[
-          ["Position", "X / Y / Z axes are any metric you pick"],
-          ["Color", "Mood, Camelot key, genre, or a numeric gradient"],
-          ["Edges", "Lines connect harmonically compatible tracks"],
+          ["3 axes", "X / Y / Z — pick any metric for each spatial dimension"],
+          ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
+          ["Time", "The 6th dimension — fly through, watch sets unfold"],
         ].map(([k, v]) => (
           <div key={k}>
             <div className="font-mono text-sm text-teal">{k}</div>
@@ -269,7 +269,7 @@ function MatrixSection() {
       </div>
       <p className="mt-10 max-w-3xl text-lg text-charcoal/75">
         Plus "High Vis" mode — fade every track that isn't compatible with your current
-        selection. Suddenly your next mix is obvious.
+        selection. Suddenly the next mix isn't a guess. It's the closest star.
       </p>
     </Section>
   );
