@@ -201,8 +201,8 @@ const FEATURES = [
   },
   {
     icon: Boxes,
-    title: "3D Neural Matrix",
-    body: "Every track is a sphere positioned by metrics you pick. Edges connect what mixes. Click to fly + play.",
+    title: "6D Neural Matrix",
+    body: "Every track is a star in a 6-dimensional universe — position, color, size, time. Fly through it. Click to play.",
   },
   {
     icon: Library,
@@ -589,7 +589,7 @@ function Footer() {
         <div>
           <Wordmark />
           <p className="mt-4 text-sm text-charcoal/70 max-w-xs">
-            See your library, not just scroll it.
+            Fly through your music. Six dimensions, defined by you.
           </p>
           <p className="mt-4 text-xs text-charcoal/50">© 2026 Mark Burnett. AGPL v3.</p>
         </div>
