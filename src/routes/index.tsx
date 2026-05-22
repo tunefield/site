@@ -605,6 +605,16 @@ function About() {
             Tunefield exists because the tool he wanted didn't exist. He's been organising
             DJ libraries for 20 years; this is the workflow that finally clicks.
           </p>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {["Ableton Certified Trainer", "20 years DJing", "Based in Germany 🇩🇪"].map((chip) => (
+              <span
+                key={chip}
+                className="inline-flex items-center text-sm bg-cream-warm text-charcoal border-l-2 border-teal pl-3 pr-4 py-1.5 rounded-r-md"
+              >
+                {chip}
+              </span>
+            ))}
+          </div>
           <p className="mt-6 text-sm text-charcoal/60 font-mono">
             Built solo. AGPL-v3 licensed. Co-developed with{" "}
             <a
