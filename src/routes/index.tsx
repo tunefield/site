@@ -110,15 +110,16 @@ function Hero() {
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
         <div className="md:col-span-7">
-          <p className="eyebrow">Music discovery, reimagined</p>
+          <p className="eyebrow">6-Dimensional music visualisation</p>
           <h1 className="mt-6 font-display font-bold text-cream text-[clamp(2.75rem,7vw,6rem)]">
-            See your library,<br />
-            not just <span className="text-pink">scroll it.</span>
+            Tired of managing<br />
+            <span className="text-pink">lists?</span>
           </h1>
           <p className="mt-7 max-w-xl text-cream/80 text-lg md:text-xl leading-relaxed">
-            Free, offline, instant. Drop in a folder — get BPM, key, mood, loudness,
-            danceability, vocals, and a 3D map of every track that mixes with every other
-            track. By a DJ + Ableton Certified Trainer who got tired of scrolling.
+            Teleport into a 6-dimensional music universe, defined by you. Fly through
+            your library — every track a star, positioned by BPM, key, mood, energy,
+            loudness, and danceability. Free, offline, instant. By a DJ + Ableton
+            Certified Trainer who got tired of scrolling.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
@@ -174,13 +175,14 @@ function Problem() {
     <Section>
       <p className="eyebrow">The working DJ's problem</p>
       <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold">
-        You already own most of the music you'll ever play. You just{" "}
-        <span className="text-teal">can't see it.</span>
+        Lists hide your music.{" "}
+        <span className="text-teal">Space reveals it.</span>
       </h2>
       <p className="mt-8 max-w-2xl text-lg text-charcoal/75">
         Every DJ has 1,000+ tracks they paid for, half of which they've forgotten.
-        Rekordbox, Serato, Traktor are all built around scrolling lists. Lists hide what's
-        adjacent. Tunefield doesn't.
+        Rekordbox, Serato, Traktor — all lists, all scrolling. Tunefield drops you
+        inside a six-dimensional universe of your own library, so what mixes with
+        what isn't hidden three pages down. It's right next to you.
       </p>
     </Section>
   );
@@ -199,8 +201,8 @@ const FEATURES = [
   },
   {
     icon: Boxes,
-    title: "3D Neural Matrix",
-    body: "Every track is a sphere positioned by metrics you pick. Edges connect what mixes. Click to fly + play.",
+    title: "6D Neural Matrix",
+    body: "Every track is a star in a 6-dimensional universe — position, color, size, time. Fly through it. Click to play.",
   },
   {
     icon: Library,
@@ -245,19 +247,19 @@ function Features() {
 function MatrixSection() {
   return (
     <Section id="matrix">
-      <p className="eyebrow">The Neural Matrix</p>
+      <p className="eyebrow">The 6D Neural Matrix</p>
       <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold">
-        Every track. Every connection. Every mood.{" "}
-        <span className="text-teal">At a glance.</span>
+        Six dimensions. One universe.{" "}
+        <span className="text-teal">Your library.</span>
       </h2>
       <div className="mt-14 rounded-3xl overflow-hidden bg-teal-deep aspect-[16/9] relative">
         <MatrixVisualization />
       </div>
       <div className="mt-12 grid md:grid-cols-3 gap-8">
         {[
-          ["Position", "X / Y / Z axes are any metric you pick"],
-          ["Color", "Mood, Camelot key, genre, or a numeric gradient"],
-          ["Edges", "Lines connect harmonically compatible tracks"],
+          ["3 axes", "X / Y / Z — pick any metric for each spatial dimension"],
+          ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
+          ["Time", "The 6th dimension — fly through, watch sets unfold"],
         ].map(([k, v]) => (
           <div key={k}>
             <div className="font-mono text-sm text-teal">{k}</div>
@@ -267,7 +269,7 @@ function MatrixSection() {
       </div>
       <p className="mt-10 max-w-3xl text-lg text-charcoal/75">
         Plus "High Vis" mode — fade every track that isn't compatible with your current
-        selection. Suddenly your next mix is obvious.
+        selection. Suddenly the next mix isn't a guess. It's the closest star.
       </p>
     </Section>
   );
@@ -587,7 +589,7 @@ function Footer() {
         <div>
           <Wordmark />
           <p className="mt-4 text-sm text-charcoal/70 max-w-xs">
-            See your library, not just scroll it.
+            Fly through your music. Six dimensions, defined by you.
           </p>
           <p className="mt-4 text-xs text-charcoal/50">© 2026 Mark Burnett. AGPL v3.</p>
         </div>
