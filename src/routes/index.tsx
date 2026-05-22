@@ -110,15 +110,16 @@ function Hero() {
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
         <div className="md:col-span-7">
-          <p className="eyebrow">Music discovery, reimagined</p>
+          <p className="eyebrow">6-Dimensional music visualisation</p>
           <h1 className="mt-6 font-display font-bold text-cream text-[clamp(2.75rem,7vw,6rem)]">
-            See your library,<br />
-            not just <span className="text-pink">scroll it.</span>
+            Tired of managing<br />
+            <span className="text-pink">lists?</span>
           </h1>
           <p className="mt-7 max-w-xl text-cream/80 text-lg md:text-xl leading-relaxed">
-            Free, offline, instant. Drop in a folder — get BPM, key, mood, loudness,
-            danceability, vocals, and a 3D map of every track that mixes with every other
-            track. By a DJ + Ableton Certified Trainer who got tired of scrolling.
+            Teleport into a 6-dimensional music universe, defined by you. Fly through
+            your library — every track a star, positioned by BPM, key, mood, energy,
+            loudness, and danceability. Free, offline, instant. By a DJ + Ableton
+            Certified Trainer who got tired of scrolling.
           </p>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
