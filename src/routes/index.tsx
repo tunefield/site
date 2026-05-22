@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Activity,
   Boxes,
@@ -24,8 +24,7 @@ import {
 } from "@/components/ui/accordion";
 import logo from "@/assets/tunefield-logo.png";
 import { LazyMatrix } from "@/components/LazyMatrix";
-import { motion, useInView, useScroll, useTransform, useMotionValue, animate } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, useScroll, useMotionValue, animate } from "framer-motion";
 
 export const Route = createFileRoute("/")({
   component: TunefieldLanding,
