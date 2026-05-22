@@ -95,46 +95,65 @@ function Nav() {
 }
 
 function Hero() {
+  const STATS = [
+    "> scanning library...",
+    "> 1,247 tracks analyzed in 38 seconds",
+    "> 89 harmonic neighbors found for \"Strobe (Deadmau5)\"",
+    "> 0 cloud requests · 100% local",
+  ];
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => (t + 1) % STATS.length), 4000);
+    return () => clearInterval(id);
+  }, []);
   return (
     <section
       id="top"
       className="relative overflow-hidden bg-teal-deep text-cream pt-32 pb-24 md:pt-40 md:pb-32"
     >
       <div
-        className="absolute inset-y-0 right-0 w-full md:w-2/3 pointer-events-none"
+        className="absolute inset-0 md:inset-y-0 md:right-0 md:left-1/3"
         aria-hidden
       >
-        <img
-          src={heroSpheres}
-          alt=""
-          className="w-full h-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/80 to-transparent" />
+        <LazyMatrix count={80} />
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/85 to-transparent md:via-teal-deep/70 md:to-transparent pointer-events-none" />
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
-        <div className="md:col-span-7">
+        <div className="md:col-span-7 pointer-events-none [&_a]:pointer-events-auto">
           <p className="eyebrow">6-Dimensional music visualisation</p>
-          <h1 className="mt-6 font-display font-bold text-cream text-[clamp(2.75rem,7vw,6rem)]">
-            Tired of managing<br />
-            <span className="text-pink">lists?</span>
+          <h1 className="mt-6 hero-headline text-cream">
+            <span className="font-normal">Tired of managing</span>
+            <br />
+            <span className="font-bold text-pink">lists?</span>
           </h1>
-          <p className="mt-7 max-w-xl text-cream/80 text-lg md:text-xl leading-relaxed">
-            Teleport into a 6-dimensional music universe, defined by you. Fly through
-            your library — every track a star, positioned by BPM, key, mood, energy,
-            loudness, and danceability. Free, offline, instant. By a DJ + Ableton
-            Certified Trainer who got tired of scrolling.
+          <p className="mt-8 text-cream/85 prose-lede">
+            Teleport into a <span className="pink-underline text-charcoal">6-dimensional music universe</span>,
+            defined by you. Every track is a star — positioned by BPM, key, mood,
+            energy, loudness, danceability. Free, offline, instant.
           </p>
+          <div className="mt-6 font-mono text-[12px] text-cream/60 h-5 overflow-hidden">
+            <motion.div
+              key={tick}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+            >
+              {STATS[tick]}
+            </motion.div>
+          </div>
           <div className="mt-9 flex flex-wrap gap-3">
             <a
               href="#download"
-              className="inline-flex items-center gap-2 rounded-full bg-teal text-cream px-6 py-3 font-medium hover:bg-teal/90 transition-colors"
+              className="group relative inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-cream border border-cream/20 transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(180deg, #11A5B3, #0E8D99)" }}
             >
+              <span className="absolute -inset-2 -z-10 rounded-full bg-pink/0 group-hover:bg-pink/25 blur-xl transition-all duration-300" />
               Download free V1
               <ArrowRight className="h-4 w-4" />
             </a>
             <a
               href="#waitlist"
-              className="inline-flex items-center gap-2 rounded-full border border-pink text-pink px-6 py-3 font-medium hover:bg-pink hover:text-charcoal transition-colors"
+              className="dashed-anim inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-pink hover:text-charcoal hover:bg-pink/90 transition-colors border border-transparent"
             >
               Join V2 waitlist
             </a>
