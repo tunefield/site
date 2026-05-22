@@ -175,13 +175,14 @@ function Problem() {
     <Section>
       <p className="eyebrow">The working DJ's problem</p>
       <h2 className="mt-6 max-w-4xl text-4xl md:text-6xl font-display font-bold">
-        You already own most of the music you'll ever play. You just{" "}
-        <span className="text-teal">can't see it.</span>
+        Lists hide your music.{" "}
+        <span className="text-teal">Space reveals it.</span>
       </h2>
       <p className="mt-8 max-w-2xl text-lg text-charcoal/75">
         Every DJ has 1,000+ tracks they paid for, half of which they've forgotten.
-        Rekordbox, Serato, Traktor are all built around scrolling lists. Lists hide what's
-        adjacent. Tunefield doesn't.
+        Rekordbox, Serato, Traktor — all lists, all scrolling. Tunefield drops you
+        inside a six-dimensional universe of your own library, so what mixes with
+        what isn't hidden three pages down. It's right next to you.
       </p>
     </Section>
   );
