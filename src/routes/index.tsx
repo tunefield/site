@@ -316,56 +316,132 @@ function FeatureCard({
 }
 
 function MatrixSection() {
+  const stages = useMemo(
+    () =>
+      [
+        { key: "position" as MatrixStage, label: "Position", caption: "X / Y / Z is any metric you pick." },
+        { key: "color" as MatrixStage, label: "Color", caption: "Mood, key, genre — painted across the field." },
+        { key: "edges" as MatrixStage, label: "Edges", caption: "What mixes with what, drawn between stars." },
+        { key: "highvis" as MatrixStage, label: "High Vis", caption: "The closest star is your next mix." },
+      ],
+    [],
+  );
+  const [idx, setIdx] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [hover, setHover] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [inView, setInView] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const stages = [
-    { range: [0, 0.25], caption: "Position — X / Y / Z is any metric you pick." },
-    { range: [0.25, 0.5], caption: "Color — mood, key, genre, painted across the field." },
-    { range: [0.5, 0.75], caption: "Edges — what mixes with what, drawn between stars." },
-    { range: [0.75, 1.0], caption: "High Vis — the closest star is your next mix." },
-  ];
-  const [stage, setStage] = useState(0);
+  const pauseTimer = useRef<number | null>(null);
+
+  const jump = (i: number) => {
+    setIdx(i);
+    setPaused(true);
+    if (pauseTimer.current) window.clearTimeout(pauseTimer.current);
+    pauseTimer.current = window.setTimeout(() => setPaused(false), 12000);
+  };
+
   useEffect(() => {
-    return scrollYProgress.on("change", (v) => {
-      const idx = stages.findIndex(({ range }) => v >= range[0] && v < range[1]);
-      setStage(idx === -1 ? stages.length - 1 : idx);
-    });
-  }, [scrollYProgress]);
+    if (paused || hover) return;
+    const id = window.setInterval(() => setIdx((i) => (i + 1) % stages.length), 4000);
+    return () => window.clearInterval(id);
+  }, [paused, hover, stages.length]);
+
+  useEffect(() => {
+    setProgress(0);
+    if (paused || hover) return;
+    const start = Date.now();
+    const id = window.setInterval(() => {
+      const e = ((Date.now() - start) / 4000) * 100;
+      setProgress(Math.min(100, e));
+    }, 60);
+    return () => window.clearInterval(id);
+  }, [idx, paused, hover]);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const obs = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.3 });
+    obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") jump((idx + 1) % stages.length);
+      else if (e.key === "ArrowLeft") jump((idx - 1 + stages.length) % stages.length);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView, idx, stages.length]);
+
   return (
-    <section id="matrix" ref={ref} className="relative bg-cream" style={{ height: "200vh" }}>
-      <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 pt-24 w-full">
-          <p className="eyebrow">The 5D Neural Matrix</p>
-          <h2 className="mt-4 max-w-4xl text-3xl md:text-5xl font-display font-bold text-charcoal">
-            Five dimensions. One universe.{" "}
-            <span className="pink-underline text-charcoal">Your library.</span>
-          </h2>
-        </div>
-        <div className="relative flex-1 mt-6 mx-4 md:mx-8 rounded-3xl overflow-hidden bg-teal-deep">
-          <LazyMatrix count={90} showTooltip={false} />
-          <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 bg-gradient-to-t from-teal-deep via-teal-deep/70 to-transparent">
-            <motion.p
-              key={stage}
-              initial={{ y: 18, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.45 }}
-              className="font-display font-semibold text-cream text-2xl md:text-3xl max-w-3xl"
-            >
-              {stages[stage].caption}
-            </motion.p>
-            <div className="mt-4 flex gap-1.5">
-              {stages.map((_, i) => (
+    <section id="matrix" ref={ref} className="bg-cream py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-6">
+        <p className="eyebrow">The 5D Neural Matrix</p>
+        <h2 className="mt-4 max-w-4xl text-3xl md:text-5xl font-display font-bold text-charcoal">
+          Five dimensions. One universe.{" "}
+          <span className="pink-underline text-charcoal">Your library.</span>
+        </h2>
+        <div
+          className="mt-10 flex flex-col-reverse md:grid md:grid-cols-10 gap-6"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          <div className="md:col-span-3 flex flex-col gap-1.5">
+            {stages.map((s, i) => (
+              <button
+                key={s.key}
+                onClick={() => jump(i)}
+                className={`text-left p-4 rounded-xl border-l-2 transition-colors ${
+                  i === idx
+                    ? "border-pink bg-cream-warm"
+                    : "border-transparent hover:bg-cream-warm/60"
+                }`}
+              >
                 <div
-                  key={i}
-                  className={`h-1 flex-1 rounded-full ${i <= stage ? "bg-pink" : "bg-cream/15"}`}
-                />
-              ))}
+                  className={`font-display text-lg ${
+                    i === idx ? "font-bold text-charcoal" : "text-charcoal/55"
+                  }`}
+                >
+                  {s.label}
+                </div>
+                <div
+                  className={`text-sm mt-1 ${
+                    i === idx ? "text-charcoal/75" : "text-charcoal/40"
+                  }`}
+                >
+                  {s.caption}
+                </div>
+              </button>
+            ))}
+            <div className="p-4 rounded-xl border-l-2 border-transparent opacity-70 cursor-not-allowed">
+              <div className="flex items-center gap-2">
+                <div className="font-display text-lg text-charcoal/50">Texture</div>
+                <span className="text-[10px] font-mono uppercase tracking-widest bg-pink text-charcoal px-2 py-0.5 rounded-full">
+                  V2
+                </span>
+              </div>
+              <div className="text-sm mt-1 text-charcoal/40">
+                Surface material per sphere — ships with V2.
+              </div>
+            </div>
+            <div className="mt-3 h-1 w-full bg-charcoal/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-pink"
+                style={{ width: `${progress}%`, transition: "width 80ms linear" }}
+              />
             </div>
           </div>
+          <div
+            className="md:col-span-7 relative rounded-3xl overflow-hidden bg-teal-deep"
+            style={{ height: "clamp(360px, 56vw, 640px)" }}
+          >
+            <LazyMatrix count={90} showTooltip={false} stage={stages[idx].key} />
+          </div>
         </div>
-      </div>
-      <div className="bg-cream">
-        <div className="mx-auto max-w-7xl px-6 py-20 grid md:grid-cols-3 gap-8">
+        <div className="mt-16 grid md:grid-cols-3 gap-8">
           {[
             ["X / Y / Z", "Three spatial axes — pick any metric for each"],
             ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
