@@ -720,7 +720,7 @@ const FAQS = [
   ],
   [
     "What's the difference between this and Mixed In Key?",
-    "Mixed In Key does keys well. We do keys plus mood, energy, LUFS, danceability, valence, vocals, timbre, and a 3D spatial map — and we're free.",
+    "Mixed In Key does keys well. We do keys plus mood, energy, LUFS, danceability, valence, vocals, timbre, and a 5D spatial map — and we're free.",
   ],
 ];
 
