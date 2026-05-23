@@ -22,7 +22,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import logo from "@/assets/tunefield-logo.png";
 import { LazyMatrix } from "@/components/LazyMatrix";
 import { motion, useInView, useScroll, useMotionValue, animate } from "framer-motion";
 
@@ -33,7 +32,6 @@ export const Route = createFileRoute("/")({
 function Wordmark({ className = "" }: { className?: string }) {
   return (
     <a href="#top" className={`inline-flex items-center gap-2 ${className}`}>
-      <img src={logo} alt="" className="h-7 w-7" />
       <span className="font-display font-bold text-charcoal text-xl tracking-tight">
         tunefield<span className="text-teal">.</span>
       </span>
