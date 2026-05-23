@@ -758,7 +758,7 @@ function Footer() {
         <div>
           <Wordmark />
           <p className="mt-4 text-sm text-charcoal/70 max-w-xs">
-            Fly through your music. Six dimensions, defined by you.
+            Fly through your music. Five dimensions, defined by you. Six in V2.
           </p>
           <p className="mt-4 text-xs text-charcoal/50">© 2026 Mark Burnett. AGPL v3.</p>
         </div>
