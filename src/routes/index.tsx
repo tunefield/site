@@ -557,98 +557,57 @@ function V2Vision() {
 }
 
 function Pricing() {
-  const [tier, setTier] = useState<"solo" | "studio" | "enterprise">("solo");
-  const allPlans = [
+  const plans = [
     {
       name: "Free",
-      audience: "solo",
       price: "€0",
       period: "forever",
       features:
-        "Everything in V1: analysis, catalog, 3D matrix, repair, import. Open source.",
+        "Everything in V1: analysis, catalog, 5D matrix, repair, import. Open source.",
       cta: "Download free V1",
       ctaHref: "#download",
       soon: false,
       featured: false,
+      ctaStyle: "primary" as const,
     },
     {
       name: "Pro",
-      audience: "solo",
       price: "€79",
       period: "one-time, lifetime license",
       features:
-        "Everything in Free + VR mode + distributor browsing + cloud sync + native exports (Rekordbox XML / Traktor NML / M3U8)",
+        "Everything in Free + VR mode + texture channel (6th dimension) + distributor browsing + cloud sync + native exports (Rekordbox XML / Traktor NML / M3U8).",
       cta: "Pre-order Pro for €59 →",
       ctaHref: "#waitlist",
       soon: true,
       featured: true,
+      ctaStyle: "sheen" as const,
     },
     {
       name: "Studio",
-      audience: "studio",
-      price: "€15/mo",
-      period: "or €150/yr",
+      price: "€10/mo",
+      period: "or €100/yr",
       features:
-        "For DJ schools + agencies. Multi-user libraries, team sharing, teaching mode.",
-      cta: "Notify me",
+        "For DJ schools + agencies. Multi-user libraries, team sharing, teaching mode, priority support.",
+      cta: "Notify me when Studio launches →",
       ctaHref: "#waitlist",
       soon: true,
       featured: false,
-    },
-    {
-      name: "Studio+",
-      audience: "studio",
-      price: "€39/mo",
-      period: "unlimited seats",
-      features: "Unlimited team seats, shared crates, role-based access, SSO.",
-      cta: "Notify me",
-      ctaHref: "#waitlist",
-      soon: true,
-      featured: false,
-    },
-    {
-      name: "Enterprise",
-      audience: "enterprise",
-      price: "Custom",
-      period: "white-glove",
-      features: "Festivals, broadcasters, libraries. Self-hosted option, custom analysis pipeline.",
-      cta: "Contact us",
-      ctaHref: "mailto:hello@tunefield.app",
-      soon: true,
-      featured: false,
+      ctaStyle: "pink-outline" as const,
     },
   ];
-  const plans = allPlans.filter((p) => p.audience === tier || (tier === "solo" && p.audience === "solo"));
   return (
     <Section id="pricing">
       <p className="eyebrow">Pricing</p>
       <h2 className="mt-6 max-w-3xl text-4xl md:text-6xl font-display font-bold">
         Free forever, with room to grow.
       </h2>
-      <div className="mt-10 inline-flex p-1 rounded-full bg-cream-warm border border-charcoal/10">
-        {(["solo", "studio", "enterprise"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTier(t)}
-            className={`px-5 py-2 rounded-full text-sm font-medium capitalize transition-colors ${
-              tier === t ? "bg-teal text-cream" : "text-charcoal/70 hover:text-charcoal"
-            }`}
-          >
-            {t}
-          </button>
-        ))}
-      </div>
-      <div className="mt-14 grid md:grid-cols-3 gap-6">
+      <div className="mt-14 grid md:grid-cols-3 gap-6 items-stretch">
         {plans.map((p) => (
-          <motion.div
+          <div
             key={p.name}
-            layout
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35 }}
-            className={`rounded-3xl p-8 flex flex-col border ${
+            className={`rounded-3xl p-8 flex flex-col border transition-transform ${
               p.featured
-                ? "bg-teal-deep text-cream border-teal-deep"
+                ? "bg-teal-deep text-cream border-teal-deep md:scale-[1.03] md:-translate-y-1 shadow-[0_30px_80px_-30px_rgba(17,165,179,0.6)]"
                 : "bg-cream-warm border-charcoal/10"
             }`}
           >
@@ -666,25 +625,31 @@ function Pricing() {
             <div className={`text-sm ${p.featured ? "text-cream/60" : "text-charcoal/60"}`}>
               {p.period}
             </div>
-            <p className={`mt-6 ${p.featured ? "text-cream/80" : "text-charcoal/75"} leading-relaxed`}>
+            <p
+              className={`mt-6 flex-1 ${
+                p.featured ? "text-cream/80" : "text-charcoal/75"
+              } leading-relaxed`}
+            >
               {p.features}
             </p>
             <a
               href={p.ctaHref}
               className={`mt-8 inline-flex justify-center items-center rounded-full px-5 py-3 font-medium transition-colors ${
-                p.featured
+                p.ctaStyle === "sheen"
                   ? "btn-sheen bg-pink text-charcoal hover:bg-pink/90"
-                  : "bg-teal text-cream hover:bg-teal/90"
+                  : p.ctaStyle === "pink-outline"
+                    ? "border-2 border-pink text-pink hover:bg-pink hover:text-charcoal"
+                    : "bg-teal text-cream hover:bg-teal/90"
               }`}
             >
               {p.cta}
             </a>
-          </motion.div>
+          </div>
         ))}
       </div>
       <p className="mt-8 text-sm text-charcoal/60 max-w-2xl">
-        No subscriptions. No data harvesting. V1 stays free forever — that's a promise, not
-        a marketing line.
+        No subscriptions on Free or Pro. No data harvesting. V1 stays free forever —
+        that's a promise, not a marketing line.
       </p>
     </Section>
   );
