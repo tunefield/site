@@ -200,8 +200,8 @@
   .pink-underline {
     text-decoration-line: underline;
     text-decoration-color: var(--pink);
-    text-decoration-thickness: 0.18em;
-    text-underline-offset: 0.18em;
+    text-decoration-thickness: 0.14em;
+    text-underline-offset: 0.28em;
     text-decoration-skip-ink: none;
   }
   .btn-sheen {

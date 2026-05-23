@@ -207,6 +207,7 @@ export function MatrixCanvas({
         camera={{ position: [0, 0, 8], fov: 55 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
       >
         <ambientLight intensity={0.4} />
         <pointLight position={[6, 6, 6]} intensity={0.8} color="#F5B3D1" />

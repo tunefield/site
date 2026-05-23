@@ -676,7 +676,7 @@ function About() {
             connection through music.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Ableton Certified Trainer", "20 years DJing", "Event Programmer"].map((chip) => (
+            {["Ableton Certified Trainer", "34 years DJing", "Event Programmer"].map((chip) => (
               <span
                 key={chip}
                 className="inline-flex items-center text-sm bg-cream-warm text-charcoal border-l-2 border-teal pl-3 pr-4 py-1.5 rounded-r-md"
