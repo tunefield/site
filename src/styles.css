@@ -198,10 +198,11 @@
     max-width: 65ch;
   }
   .pink-underline {
-    background-image: linear-gradient(transparent 62%, var(--pink) 62%, var(--pink) 88%, transparent 88%);
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    padding: 0 0.05em;
+    text-decoration-line: underline;
+    text-decoration-color: var(--pink);
+    text-decoration-thickness: 0.18em;
+    text-underline-offset: 0.18em;
+    text-decoration-skip-ink: none;
   }
   .btn-sheen {
     position: relative;
