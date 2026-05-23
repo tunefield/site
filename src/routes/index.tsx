@@ -386,22 +386,50 @@ function DimensionCounter() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const mv = useMotionValue(0);
   const [val, setVal] = useState(0);
+  const [showPlus, setShowPlus] = useState(false);
+  const [upgraded, setUpgraded] = useState(false);
   useEffect(() => {
     if (!inView) return;
-    const controls = animate(mv, 6, { duration: 1.6, ease: "easeOut" });
+    const controls = animate(mv, 5, { duration: 1.6, ease: "easeOut" });
     const unsub = mv.on("change", (v) => setVal(Math.round(v)));
+    const t1 = setTimeout(() => setShowPlus(true), 1600 + 600);
+    const t2 = setTimeout(() => {
+      setUpgraded(true);
+      setVal(6);
+    }, 1600 + 600 + 700);
     return () => {
       controls.stop();
       unsub();
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
   }, [inView, mv]);
   return (
     <div ref={ref} className="flex flex-col items-center text-center">
-      <div className="font-display font-bold text-pink leading-none" style={{ fontSize: "clamp(6rem, 14vw, 12rem)" }}>
-        {val}
+      <div className="relative font-display font-bold text-pink leading-none" style={{ fontSize: "clamp(6rem, 14vw, 12rem)" }}>
+        <motion.span
+          key={upgraded ? "six" : "count"}
+          initial={upgraded ? { scale: 0.7, opacity: 0 } : false}
+          animate={upgraded ? { scale: 1, opacity: 1 } : {}}
+          transition={{ type: "spring", stiffness: 220, damping: 16 }}
+          className="inline-block"
+        >
+          {val}
+        </motion.span>
+        {showPlus && !upgraded && (
+          <motion.span
+            initial={{ opacity: 0, y: 20, scale: 0.6 }}
+            animate={{ opacity: [0, 1, 1, 0], y: [20, -10, -30, -50], scale: [0.6, 1, 1, 1.1] }}
+            transition={{ duration: 0.7, times: [0, 0.3, 0.7, 1] }}
+            className="absolute left-full top-0 ml-2 text-pink"
+            style={{ fontSize: "0.35em" }}
+          >
+            +1
+          </motion.span>
+        )}
       </div>
       <p className="mt-4 max-w-xl text-cream/75 text-lg">
-        Six dimensions of musical meaning. One sphere at a time.
+        Five dimensions today. Six when V2 ships.
       </p>
     </div>
   );
