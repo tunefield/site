@@ -201,7 +201,7 @@ function Problem() {
       <p className="mt-8 max-w-2xl text-lg text-charcoal/75">
         Every DJ has 1,000+ tracks they paid for, half of which they've forgotten.
         Rekordbox, Serato, Traktor — all lists, all scrolling. Tunefield drops you
-        inside a six-dimensional universe of your own library, so what mixes with
+        inside a five-dimensional universe of your own library, so what mixes with
         what isn't hidden three pages down. It's right next to you.
       </p>
     </Section>
