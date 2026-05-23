@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import heroSpheres from "@/assets/hero-spheres.png";
+import type { MatrixStage } from "./MatrixCanvas";
 
 const MatrixCanvas = lazy(() =>
   import("./MatrixCanvas").then((m) => ({ default: m.MatrixCanvas })),
@@ -21,10 +22,12 @@ export function LazyMatrix({
   count = 80,
   showTooltip = true,
   className = "",
+  stage,
 }: {
   count?: number;
   showTooltip?: boolean;
   className?: string;
+  stage?: MatrixStage;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -65,7 +68,7 @@ export function LazyMatrix({
             />
           }
         >
-          <MatrixCanvas count={count} showTooltip={showTooltip} />
+          <MatrixCanvas count={count} showTooltip={showTooltip} stage={stage} />
         </Suspense>
       )}
     </div>
