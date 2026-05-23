@@ -117,14 +117,14 @@ function Hero() {
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
         <div className="md:col-span-7 pointer-events-none [&_a]:pointer-events-auto">
-          <p className="eyebrow">6-Dimensional music visualisation</p>
+          <p className="eyebrow">5-Dimensional music visualisation</p>
           <h1 className="mt-6 hero-headline text-cream">
             <span className="font-normal">Tired of managing</span>
             <br />
             <span className="font-bold text-pink">lists?</span>
           </h1>
           <p className="mt-8 text-cream/85 prose-lede">
-            Teleport into a <span className="pink-underline text-charcoal">6-dimensional music universe</span>,
+            Teleport into a <span className="pink-underline text-charcoal">5-dimensional music universe</span>,
             defined by you. Every track is a star — positioned by BPM, key, mood,
             energy, loudness, danceability. Free, offline, instant.
           </p>
@@ -220,8 +220,8 @@ const FEATURES = [
   },
   {
     icon: Boxes,
-    title: "6D Neural Matrix",
-    body: "Every track is a star in a 6-dimensional universe — X, Y, Z, color, size, texture. Fly through it. Click to play.",
+    title: "5D Neural Matrix",
+    body: "Every track is a star in a 5-dimensional universe — X, Y, Z, color, size. Fly through it. Click to play. Texture lands in V2.",
   },
   {
     icon: Library,
@@ -334,9 +334,9 @@ function MatrixSection() {
     <section id="matrix" ref={ref} className="relative bg-cream" style={{ height: "200vh" }}>
       <div className="sticky top-0 h-screen flex flex-col overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 pt-24 w-full">
-          <p className="eyebrow">The 6D Neural Matrix</p>
+          <p className="eyebrow">The 5D Neural Matrix</p>
           <h2 className="mt-4 max-w-4xl text-3xl md:text-5xl font-display font-bold text-charcoal">
-            Six dimensions. One universe.{" "}
+            Five dimensions. One universe.{" "}
             <span className="pink-underline text-charcoal">Your library.</span>
           </h2>
         </div>
@@ -386,22 +386,50 @@ function DimensionCounter() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
   const mv = useMotionValue(0);
   const [val, setVal] = useState(0);
+  const [showPlus, setShowPlus] = useState(false);
+  const [upgraded, setUpgraded] = useState(false);
   useEffect(() => {
     if (!inView) return;
-    const controls = animate(mv, 6, { duration: 1.6, ease: "easeOut" });
+    const controls = animate(mv, 5, { duration: 1.6, ease: "easeOut" });
     const unsub = mv.on("change", (v) => setVal(Math.round(v)));
+    const t1 = setTimeout(() => setShowPlus(true), 1600 + 600);
+    const t2 = setTimeout(() => {
+      setUpgraded(true);
+      setVal(6);
+    }, 1600 + 600 + 700);
     return () => {
       controls.stop();
       unsub();
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
   }, [inView, mv]);
   return (
     <div ref={ref} className="flex flex-col items-center text-center">
-      <div className="font-display font-bold text-pink leading-none" style={{ fontSize: "clamp(6rem, 14vw, 12rem)" }}>
-        {val}
+      <div className="relative font-display font-bold text-pink leading-none" style={{ fontSize: "clamp(6rem, 14vw, 12rem)" }}>
+        <motion.span
+          key={upgraded ? "six" : "count"}
+          initial={upgraded ? { scale: 0.7, opacity: 0 } : false}
+          animate={upgraded ? { scale: 1, opacity: 1 } : {}}
+          transition={{ type: "spring", stiffness: 220, damping: 16 }}
+          className="inline-block"
+        >
+          {val}
+        </motion.span>
+        {showPlus && !upgraded && (
+          <motion.span
+            initial={{ opacity: 0, y: 20, scale: 0.6 }}
+            animate={{ opacity: [0, 1, 1, 0], y: [20, -10, -30, -50], scale: [0.6, 1, 1, 1.1] }}
+            transition={{ duration: 0.7, times: [0, 0.3, 0.7, 1] }}
+            className="absolute left-full top-0 ml-2 text-pink"
+            style={{ fontSize: "0.35em" }}
+          >
+            +1
+          </motion.span>
+        )}
       </div>
       <p className="mt-4 max-w-xl text-cream/75 text-lg">
-        Six dimensions of musical meaning. One sphere at a time.
+        Five dimensions today. Six when V2 ships.
       </p>
     </div>
   );
@@ -758,7 +786,7 @@ function Footer() {
         <div>
           <Wordmark />
           <p className="mt-4 text-sm text-charcoal/70 max-w-xs">
-            Fly through your music. Six dimensions, defined by you.
+            Fly through your music. Five dimensions, defined by you. Six in V2.
           </p>
           <p className="mt-4 text-xs text-charcoal/50">© 2026 Mark Burnett. AGPL v3.</p>
         </div>
