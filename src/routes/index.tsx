@@ -848,41 +848,36 @@ function About() {
   return (
     <Section>
       <p className="eyebrow">Principles</p>
-      <div className="mt-10 grid md:grid-cols-12 gap-10 items-center">
-        <div className="md:col-span-4">
-          <div className="aspect-[4/5] rounded-3xl bg-gradient-to-br from-teal/30 via-pink/20 to-teal-deep/20 border border-charcoal/10 flex items-center justify-center">
-            <div className="font-display text-7xl text-teal-deep/30 font-bold">MB</div>
-          </div>
-        </div>
-        <div className="md:col-span-8">
-          <p className="text-2xl md:text-3xl font-display leading-snug text-charcoal">
-            Tunefield maps your library as <span className="text-teal">space</span>,
-            not lists. Built for the unexpected mixes that move rooms — the connections
-            lists hide. In service of <span className="text-teal">diversity</span>,{" "}
-            <span className="text-teal">exploration</span>, and{" "}
-            <span className="text-teal">connection</span> through music.
+      <div className="mt-10 grid md:grid-cols-3 gap-10 md:gap-6 max-w-5xl">
+        <div className="border-l-2 border-teal pl-5">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-teal">
+            Built
           </p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {["Ableton Certified Trainer", "34 years DJing", "Event Programmer"].map((chip) => (
-              <span
-                key={chip}
-                className="inline-flex items-center text-sm bg-cream-warm text-charcoal border-l-2 border-teal pl-3 pr-4 py-1.5 rounded-r-md"
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
-          <p className="mt-6 text-sm text-charcoal/60 font-mono">
-            Built solo. AGPL-v3 licensed. Co-developed with{" "}
+          <p className="mt-3 font-display text-2xl md:text-3xl font-bold text-charcoal leading-tight">
+            Solo.
+          </p>
+        </div>
+        <div className="border-l-2 border-teal pl-5">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-teal">
+            Licensed
+          </p>
+          <p className="mt-3 font-display text-2xl md:text-3xl font-bold text-charcoal leading-tight">
+            AGPL&#8209;v3.
+          </p>
+        </div>
+        <div className="border-l-2 border-teal pl-5">
+          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-teal">
+            Co&#8209;developed with
+          </p>
+          <p className="mt-3 font-display text-2xl md:text-3xl font-bold text-charcoal leading-tight">
             <a
               href="https://claude.com/claude-code"
-              className="underline hover:text-teal"
+              className="hover:text-teal transition-colors"
               target="_blank"
               rel="noreferrer"
             >
-              Claude Code
+              Claude Code.
             </a>
-            .
           </p>
         </div>
       </div>
