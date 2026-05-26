@@ -7,6 +7,7 @@ import {
   Tags,
   Wrench,
   Disc3,
+  SlidersHorizontal,
   ArrowUpRight,
   ArrowRight,
   Github,
@@ -398,9 +399,9 @@ const FEATURES = [
     body: "BPM, key (Camelot), LUFS loudness, mood, danceability, valence, vocals, timbre — every track, 60 seconds, fully local.",
   },
   {
-    icon: Disc3,
-    title: "Camelot wheel",
-    body: "Filter by harmonically compatible keys with four compat modes and a directional energy filter.",
+    icon: SlidersHorizontal,
+    title: "Intelligent filters",
+    body: "Camelot wheel for harmonic compat with four modes and a directional energy filter. Stack range sliders for BPM, danceability, energy, valence, length — plus star ratings, user tags, editable genre. Your catalog narrows in real time.",
   },
   {
     icon: Boxes,
@@ -455,17 +456,10 @@ function Features() {
           <span className="absolute left-0 -bottom-2 h-[6px] w-full bg-pink rounded-full" />
         </span>
       </h2>
-      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {v1Cards.slice(0, 4).map((c) => (
+      <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {v1Cards.map((c) => (
           <FeatureCard key={c.title} {...c} />
         ))}
-        <div className="hidden lg:block" />
-        {v1Cards.slice(4, 6).map((c) => (
-          <FeatureCard key={c.title} {...c} />
-        ))}
-        <div className="hidden lg:block" />
-      </div>
-      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         {v2Cards.map((c) => (
           <FeatureCard key={c.title} {...c} featured />
         ))}
