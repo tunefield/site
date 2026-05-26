@@ -94,6 +94,18 @@ function Nav() {
   );
 }
 
+function useHeroPrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
+}
+
 function Hero() {
   const STATS = [
     "> scanning library...",
@@ -102,6 +114,7 @@ function Hero() {
     "> 0 cloud requests · 100% local",
   ];
   const [tick, setTick] = useState(0);
+  const reducedMotion = useHeroPrefersReducedMotion();
   useEffect(() => {
     const id = setInterval(() => setTick((t) => (t + 1) % STATS.length), 4000);
     return () => clearInterval(id);
@@ -109,14 +122,37 @@ function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-teal-deep text-cream pt-32 pb-24 md:pt-40 md:pb-32"
+      className="relative overflow-hidden bg-teal-deep text-cream pt-32 pb-24 md:pt-40 md:pb-32 min-h-[720px] md:min-h-[820px]"
     >
-      <div
-        className="absolute inset-0 md:inset-y-0 md:right-0 md:left-1/3"
-        aria-hidden
-      >
-        <LazyMatrix count={80} />
-        <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/85 to-transparent md:via-teal-deep/70 md:to-transparent pointer-events-none" />
+      {/* Full-bleed cinematic background: muted looping video (or static poster if user prefers reduced motion). */}
+      <div className="absolute inset-0 overflow-hidden" aria-hidden>
+        {reducedMotion ? (
+          <img
+            src="/hero-poster.jpg"
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster="/hero-poster.jpg"
+          >
+            {/* Mobile gets the smaller crop; desktop gets full 1080p. */}
+            <source src="/hero-mobile.mp4#t=0.001" type="video/mp4" media="(max-width: 768px)" />
+            <source src="/hero.mp4#t=0.001" type="video/mp4" />
+          </video>
+        )}
+        {/* Left-to-right legibility gradient — keeps headline area dark, lets video breathe on the right. */}
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/80 to-teal-deep/30 md:via-teal-deep/65 md:to-teal-deep/10 pointer-events-none" />
+        {/* Top + bottom soft fades so nav + trust-badge row stay clean. */}
+        <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-teal-deep/80 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-teal-deep to-transparent pointer-events-none" />
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
         <div className="md:col-span-7 pointer-events-none [&_a]:pointer-events-auto">
