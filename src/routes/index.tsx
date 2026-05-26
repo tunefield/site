@@ -847,7 +847,7 @@ function Pricing() {
 function About() {
   return (
     <Section>
-      <p className="eyebrow">Who's behind this</p>
+      <p className="eyebrow">Principles</p>
       <div className="mt-10 grid md:grid-cols-12 gap-10 items-center">
         <div className="md:col-span-4">
           <div className="aspect-[4/5] rounded-3xl bg-gradient-to-br from-teal/30 via-pink/20 to-teal-deep/20 border border-charcoal/10 flex items-center justify-center">
@@ -856,13 +856,11 @@ function About() {
         </div>
         <div className="md:col-span-8">
           <p className="text-2xl md:text-3xl font-display leading-snug text-charcoal">
-            Tunefield is a concept by <span className="text-teal">Mark Burnett</span>. He
-            started DJing at 13. Three and a half decades on, what he's learned is this:
-            the magic happens in the unexpected connections — when a room shifts because
-            two tracks no one saw together get mixed. Lists hide those connections. Space
-            reveals them. He worked with Claude Code to build the tool that finally makes
-            them visible. Tunefield exists in service of diversity, exploration, and
-            connection through music.
+            Tunefield maps your library as <span className="text-teal">space</span>,
+            not lists. Built for the unexpected mixes that move rooms — the connections
+            lists hide. In service of <span className="text-teal">diversity</span>,{" "}
+            <span className="text-teal">exploration</span>, and{" "}
+            <span className="text-teal">connection</span> through music.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {["Ableton Certified Trainer", "34 years DJing", "Event Programmer"].map((chip) => (
