@@ -867,16 +867,16 @@ function About() {
         </div>
         <div className="border-l-2 border-teal pl-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-teal">
-            Co&#8209;developed with
+            Designed by
           </p>
           <p className="mt-3 font-display text-2xl md:text-3xl font-bold text-charcoal leading-tight">
             <a
-              href="https://claude.com/claude-code"
+              href="https://linktr.ee/oftenvague"
               className="hover:text-teal transition-colors"
               target="_blank"
               rel="noreferrer"
             >
-              Claude Code.
+              Mark Adam Burnett.
             </a>
           </p>
         </div>
