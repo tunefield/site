@@ -15,6 +15,8 @@ import {
   Linkedin,
   Music2,
   Layers,
+  Glasses,
+  ShoppingBag,
 } from "lucide-react";
 import {
   Accordion,
@@ -125,7 +127,7 @@ function Hero() {
             <span className="font-bold text-pink">lists?</span>
           </h1>
           <p className="mt-8 text-cream/85 prose-lede">
-            Teleport into a <span className="pink-underline text-charcoal">5-dimensional music universe</span>,
+            Teleport into a <span className="pink-underline">5-dimensional music universe</span>,
             defined by you. Every track is a star — positioned by BPM, key, mood,
             energy, loudness, danceability. Free, offline, instant.
           </p>
@@ -242,38 +244,50 @@ const FEATURES = [
 ];
 
 function Features() {
-  const cards = [
-    ...FEATURES,
+  const v1Cards = FEATURES;
+  const v2Cards = [
     {
       icon: Layers,
       title: "Texture channel",
       body: "A sixth visual dimension. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Roughness becomes meaning.",
       v2: true,
     },
+    {
+      icon: Glasses,
+      title: "VR mode",
+      body: "WebXR-powered. Stand inside your library. Mixable tracks orbit you. Look at one to play it. Reach out to mix it.",
+      v2: true,
+    },
+    {
+      icon: ShoppingBag,
+      title: "Distributor integrations",
+      body: "Browse Beatport, Juno, Bandcamp, Traxsource without leaving Tunefield. Buy tracks that land straight into your catalog. Affiliate-funded — V1 stays free forever.",
+      v2: true,
+    },
   ];
   return (
     <Section id="features" dark>
       <h2 className="max-w-3xl text-4xl md:text-6xl font-display font-bold">
-        Seven things,{" "}
+        Nine things,{" "}
         <span className="relative inline-block">
           done well.
           <span className="absolute left-0 -bottom-2 h-[6px] w-full bg-pink rounded-full" />
         </span>
       </h2>
       <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {cards.slice(0, 4).map((c) => (
+        {v1Cards.slice(0, 4).map((c) => (
           <FeatureCard key={c.title} {...c} />
         ))}
         <div className="hidden lg:block" />
-        {cards.slice(4, 6).map((c) => (
+        {v1Cards.slice(4, 6).map((c) => (
           <FeatureCard key={c.title} {...c} />
         ))}
         <div className="hidden lg:block" />
-        <div className="lg:col-span-4 flex justify-center">
-          <div className="w-full lg:w-1/3">
-            <FeatureCard {...cards[6]} featured />
-          </div>
-        </div>
+      </div>
+      <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+        {v2Cards.map((c) => (
+          <FeatureCard key={c.title} {...c} featured />
+        ))}
       </div>
     </Section>
   );
