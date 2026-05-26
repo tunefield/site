@@ -1,18 +1,21 @@
-// Tunefield marketing site — Vite config (post-Lovable eject).
-// Mirrors the plugin/option set @lovable.dev/vite-tanstack-config used to provide
-// (minus the Lovable-only sandbox / hmr-gate / componentTagger / error-logger plugins).
+// Tunefield marketing site — Vite config.
+// Deployment target: Vercel (static SPA).
+// The funnel API (download requests, etc.) will live separately as
+// Vercel serverless functions under /api/*, not inside TanStack Start.
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import { cloudflare } from "@cloudflare/vite-plugin";
 
-export default defineConfig(({ command }) => ({
+export default defineConfig({
   plugins: [
     tailwindcss(),
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({
+      spa: {
+        enabled: true,
+      },
       importProtection: {
         behavior: "error",
         client: {
@@ -20,14 +23,8 @@ export default defineConfig(({ command }) => ({
           specifiers: ["server-only"],
         },
       },
-      server: { entry: "server" },
     }),
     viteReact(),
-    // Cloudflare worker bundling only at build time.
-    // If we later swap to Vercel, delete this plugin and the @cloudflare/vite-plugin dep.
-    ...(command === "build"
-      ? [cloudflare({ viteEnvironment: { name: "ssr" } })]
-      : []),
   ],
   resolve: {
     alias: {
@@ -46,4 +43,4 @@ export default defineConfig(({ command }) => ({
     host: "::",
     port: 8080,
   },
-}));
+});
