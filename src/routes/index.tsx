@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/accordion";
 import { LazyMatrix } from "@/components/LazyMatrix";
 import type { MatrixStage } from "@/components/MatrixCanvas";
-import { motion, useInView, useMotionValue, animate } from "framer-motion";
+import { motion, useInView, useMotionValue, animate, AnimatePresence, useSpring, useTransform } from "framer-motion";
 
 export const Route = createFileRoute("/")({
   component: TunefieldLanding,
@@ -106,6 +106,105 @@ function useHeroPrefersReducedMotion() {
   return reduced;
 }
 
+// Cinematic looping headline. Phrases cycle: "ARE YOU READY?" -> "NEXT GENERATION"
+// -> "MUSIC EXPLORATION" -> "IS HERE." (climactic pink). Each phrase enters scale+blur->sharp
+// and exits with a tiny scale-up + blur-out before the next one slams in.
+const HEADLINE_PHRASES: { text: string; pink?: boolean; holdMs: number }[] = [
+  { text: "ARE YOU READY?", holdMs: 1600 },
+  { text: "NEXT GENERATION", holdMs: 1600 },
+  { text: "MUSIC EXPLORATION", holdMs: 1700 },
+  { text: "IS HERE.", pink: true, holdMs: 2200 },
+];
+
+function HeadlineSequence({ reduced }: { reduced: boolean }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (reduced) return;
+    const id = setTimeout(
+      () => setI((v) => (v + 1) % HEADLINE_PHRASES.length),
+      HEADLINE_PHRASES[i].holdMs,
+    );
+    return () => clearTimeout(id);
+  }, [i, reduced]);
+  // Reduced motion: show the climactic phrase statically.
+  const phrase = reduced ? HEADLINE_PHRASES[HEADLINE_PHRASES.length - 1] : HEADLINE_PHRASES[i];
+  return (
+    <div
+      className="relative hero-headline leading-[1] h-[1.05em] md:h-[1em]"
+      aria-label="Are you ready? Next generation music exploration is here."
+    >
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={phrase.text}
+          aria-hidden
+          className={`absolute inset-0 font-bold tracking-tight whitespace-nowrap ${
+            phrase.pink ? "text-pink" : "text-cream"
+          }`}
+          initial={{ opacity: 0, scale: 0.92, filter: "blur(10px)" }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          exit={{ opacity: 0, scale: 1.06, filter: "blur(12px)" }}
+          transition={{ duration: 0.45, ease: [0.2, 0.6, 0.2, 1] }}
+        >
+          {phrase.text}
+          {phrase.pink && (
+            <motion.span
+              className="absolute -inset-x-2 inset-y-0 -z-10 rounded-2xl bg-pink/30 blur-3xl"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+            />
+          )}
+        </motion.span>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// Typewriter subhead with the pink underline kicking in as the key phrase types out.
+const SUBHEAD_TEXT =
+  "Teleport into a 5-dimensional music universe, defined by you. Every track is a star — positioned by BPM, key, mood, energy, loudness, danceability. Free, offline, instant.";
+const SUBHEAD_HIGHLIGHT = "5-dimensional music universe";
+const SUBHEAD_HIGHLIGHT_START = SUBHEAD_TEXT.indexOf(SUBHEAD_HIGHLIGHT);
+const SUBHEAD_HIGHLIGHT_END = SUBHEAD_HIGHLIGHT_START + SUBHEAD_HIGHLIGHT.length;
+
+function TypewriterSubhead({ reduced }: { reduced: boolean }) {
+  const [count, setCount] = useState(reduced ? SUBHEAD_TEXT.length : 0);
+  useEffect(() => {
+    if (reduced) return;
+    const start = setTimeout(() => {
+      const id = setInterval(() => {
+        setCount((c) => {
+          if (c >= SUBHEAD_TEXT.length) {
+            clearInterval(id);
+            return c;
+          }
+          return c + 2;
+        });
+      }, 16);
+      return () => clearInterval(id);
+    }, 1400);
+    return () => clearTimeout(start);
+  }, [reduced]);
+  const before = SUBHEAD_TEXT.slice(0, Math.min(count, SUBHEAD_HIGHLIGHT_START));
+  const universe = SUBHEAD_TEXT.slice(SUBHEAD_HIGHLIGHT_START, Math.min(count, SUBHEAD_HIGHLIGHT_END));
+  const after = SUBHEAD_TEXT.slice(SUBHEAD_HIGHLIGHT_END, count);
+  const showingUniverse = count >= SUBHEAD_HIGHLIGHT_START;
+  const universeComplete = count >= SUBHEAD_HIGHLIGHT_END;
+  const stillTyping = !reduced && count < SUBHEAD_TEXT.length;
+  return (
+    <p className="mt-8 text-cream/85 prose-lede">
+      {before}
+      {showingUniverse && (
+        <span className={universeComplete ? "pink-underline" : ""}>{universe}</span>
+      )}
+      {after}
+      {stillTyping && (
+        <span className="inline-block w-[2px] h-[1em] -mb-[2px] bg-cream/70 ml-0.5 align-middle animate-pulse" />
+      )}
+    </p>
+  );
+}
+
 function Hero() {
   const STATS = [
     "> scanning library...",
@@ -119,6 +218,32 @@ function Hero() {
     const id = setInterval(() => setTick((t) => (t + 1) % STATS.length), 4000);
     return () => clearInterval(id);
   }, []);
+
+  // Mouse-tracking parallax. Cursor pos -> normalized [-1, +1] across viewport,
+  // springs damp the lag so the text feels like it floats over the video plane.
+  const mxRaw = useMotionValue(0);
+  const myRaw = useMotionValue(0);
+  const mxSpring = useSpring(mxRaw, { stiffness: 80, damping: 20, mass: 0.6 });
+  const mySpring = useSpring(myRaw, { stiffness: 80, damping: 20, mass: 0.6 });
+  const parallaxX = useTransform(mxSpring, [-1, 1], [-10, 10]);
+  const parallaxY = useTransform(mySpring, [-1, 1], [-6, 6]);
+  useEffect(() => {
+    if (reducedMotion) return;
+    const handler = (e: MouseEvent) => {
+      mxRaw.set((e.clientX / window.innerWidth - 0.5) * 2);
+      myRaw.set((e.clientY / window.innerHeight - 0.5) * 2);
+    };
+    window.addEventListener("mousemove", handler);
+    return () => window.removeEventListener("mousemove", handler);
+  }, [reducedMotion, mxRaw, myRaw]);
+
+  const trustBadges = [
+    "100% offline",
+    "Open source",
+    "Mac / Windows / Linux",
+    "Under 1% of your USB stick",
+  ];
+
   return (
     <section
       id="top"
@@ -143,30 +268,31 @@ function Hero() {
             preload="auto"
             poster="/hero-poster.jpg"
           >
-            {/* Mobile gets the smaller crop; desktop gets full 1080p. */}
             <source src="/hero-mobile.mp4#t=0.001" type="video/mp4" media="(max-width: 768px)" />
             <source src="/hero.mp4#t=0.001" type="video/mp4" />
           </video>
         )}
-        {/* Left-to-right legibility gradient — keeps headline area dark, lets video breathe on the right. */}
         <div className="absolute inset-0 bg-gradient-to-r from-teal-deep via-teal-deep/80 to-teal-deep/30 md:via-teal-deep/65 md:to-teal-deep/10 pointer-events-none" />
-        {/* Top + bottom soft fades so nav + trust-badge row stay clean. */}
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-teal-deep/80 to-transparent pointer-events-none" />
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-teal-deep to-transparent pointer-events-none" />
       </div>
       <div className="relative mx-auto max-w-7xl px-6 grid md:grid-cols-12 gap-8">
-        <div className="md:col-span-7 pointer-events-none [&_a]:pointer-events-auto">
-          <p className="eyebrow">5-Dimensional music visualisation</p>
-          <h1 className="mt-6 hero-headline text-cream">
-            <span className="font-normal">Tired of managing</span>
-            <br />
-            <span className="font-bold text-pink">lists?</span>
-          </h1>
-          <p className="mt-8 text-cream/85 prose-lede">
-            Teleport into a <span className="pink-underline">5-dimensional music universe</span>,
-            defined by you. Every track is a star — positioned by BPM, key, mood,
-            energy, loudness, danceability. Free, offline, instant.
-          </p>
+        <motion.div
+          className="md:col-span-8 pointer-events-none [&_a]:pointer-events-auto"
+          style={{ x: parallaxX, y: parallaxY }}
+        >
+          <motion.p
+            className="eyebrow"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            5-Dimensional music visualisation
+          </motion.p>
+          <div className="mt-6">
+            <HeadlineSequence reduced={reducedMotion} />
+          </div>
+          <TypewriterSubhead reduced={reducedMotion} />
           <div className="mt-6 font-mono text-[12px] text-cream/60 h-5 overflow-hidden">
             <motion.div
               key={tick}
@@ -178,15 +304,28 @@ function Hero() {
             </motion.div>
           </div>
           <div className="mt-9 flex flex-wrap gap-3">
-            <a
+            <motion.a
               href="#download"
               className="group relative inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-cream border border-cream/20 transition-all hover:-translate-y-0.5"
               style={{ background: "linear-gradient(180deg, #11A5B3, #0E8D99)" }}
+              animate={
+                reducedMotion
+                  ? undefined
+                  : {
+                      scale: [1, 1.025, 1],
+                      boxShadow: [
+                        "0 0 0px 0px rgba(245,179,209,0)",
+                        "0 0 24px 4px rgba(245,179,209,0.35)",
+                        "0 0 0px 0px rgba(245,179,209,0)",
+                      ],
+                    }
+              }
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             >
               <span className="absolute -inset-2 -z-10 rounded-full bg-pink/0 group-hover:bg-pink/25 blur-xl transition-all duration-300" />
               Download free V1
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </motion.a>
             <a
               href="#waitlist"
               className="dashed-anim inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-pink hover:text-charcoal hover:bg-pink/90 transition-colors border border-transparent"
@@ -195,15 +334,21 @@ function Hero() {
             </a>
           </div>
           <ul className="mt-12 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.18em] text-cream/60">
-            <li>100% offline</li>
-            <li className="text-cream/30">·</li>
-            <li>Open source</li>
-            <li className="text-cream/30">·</li>
-            <li>Mac / Windows / Linux</li>
-            <li className="text-cream/30">·</li>
-            <li>Under 1% of your USB stick</li>
+            {trustBadges.map((b, i) => (
+              <motion.li
+                key={b}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.0 + i * 0.12, duration: 0.45, ease: "easeOut" }}
+              >
+                {b}
+                {i < trustBadges.length - 1 && (
+                  <span className="ml-6 text-cream/30">·</span>
+                )}
+              </motion.li>
+            ))}
           </ul>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
