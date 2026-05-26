@@ -269,7 +269,7 @@ function Hero() {
             preload="auto"
             poster="/hero-poster.jpg"
           >
-            <source src="/hero-mobile.mp4#t=0.001" type="video/mp4" media="(max-width: 768px)" />
+            <source src="/hero-portrait.mp4#t=0.001" type="video/mp4" media="(orientation: portrait) and (max-width: 900px)" />
             <source src="/hero.mp4#t=0.001" type="video/mp4" />
           </video>
         )}
