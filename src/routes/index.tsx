@@ -1093,17 +1093,50 @@ function TunefieldLanding() {
 }
 
 function Placeholder() {
+  const reduced = useHeroPrefersReducedMotion();
   return (
-    <div className="bg-cream min-h-screen flex flex-col items-center justify-center px-6 text-center">
-      <h1 className="font-display font-bold text-charcoal text-6xl md:text-8xl tracking-tight">
-        tunefield<span className="text-teal">.</span>
-      </h1>
-      <p className="mt-8 font-mono text-xs uppercase tracking-[0.3em] text-charcoal/55">
-        In development
-      </p>
-      <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-charcoal/30">
-        © {new Date().getFullYear()} Mark Adam Burnett
-      </p>
+    <div className="bg-teal-deep min-h-screen relative overflow-hidden text-cream">
+      {/* Full-bleed cinematic background. Reused from the production Hero so when
+          we flip back to <FullSite /> the same encoded MP4s serve both modes. */}
+      <div className="absolute inset-0" aria-hidden>
+        {reduced ? (
+          <img
+            src="/hero-poster.jpg"
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster="/hero-poster.jpg"
+          >
+            <source src="/hero-portrait.mp4#t=0.001" type="video/mp4" media="(orientation: portrait) and (max-width: 900px)" />
+            <source src="/hero.mp4#t=0.001" type="video/mp4" />
+          </video>
+        )}
+        {/* Dark vignette so the wordmark stays legible regardless of frame. */}
+        <div className="absolute inset-0 bg-gradient-to-b from-teal-deep/70 via-teal-deep/40 to-teal-deep/85 pointer-events-none" />
+        <div className="absolute inset-0 bg-teal-deep/20 pointer-events-none" />
+      </div>
+
+      {/* Foreground content */}
+      <div className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center">
+        <h1 className="font-display font-bold text-cream text-6xl md:text-8xl tracking-tight drop-shadow-[0_4px_24px_rgba(14,42,42,0.6)]">
+          tunefield<span className="text-pink">.</span>
+        </h1>
+        <p className="mt-8 font-mono text-xs uppercase tracking-[0.3em] text-cream/70">
+          In development
+        </p>
+        <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40">
+          © {new Date().getFullYear()} Mark Adam Burnett
+        </p>
+      </div>
     </div>
   );
 }
