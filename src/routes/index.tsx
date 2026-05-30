@@ -1086,7 +1086,32 @@ function Footer() {
   );
 }
 
+// Placeholder mode — every section component above is preserved but unmounted.
+// To restore the full marketing site: swap TunefieldLanding back to <FullSite />.
 function TunefieldLanding() {
+  return <Placeholder />;
+}
+
+function Placeholder() {
+  return (
+    <div className="bg-cream min-h-screen flex flex-col items-center justify-center px-6 text-center">
+      <h1 className="font-display font-bold text-charcoal text-6xl md:text-8xl tracking-tight">
+        tunefield<span className="text-teal">.</span>
+      </h1>
+      <p className="mt-8 font-mono text-xs uppercase tracking-[0.3em] text-charcoal/55">
+        In development
+      </p>
+      <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-charcoal/30">
+        © {new Date().getFullYear()} Mark Adam Burnett
+      </p>
+    </div>
+  );
+}
+
+// Original full landing page — kept here so flipping back is a one-liner change
+// to TunefieldLanding above. Do not delete.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function FullSite() {
   return (
     <div className="bg-cream min-h-screen">
       <Nav />

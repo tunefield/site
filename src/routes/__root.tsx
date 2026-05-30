@@ -72,17 +72,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Tunefield — See your library, not just scroll it." },
-      { name: "description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
-      { name: "author", content: "Mark Burnett" },
-      { property: "og:title", content: "Tunefield — See your library, not just scroll it." },
-      { property: "og:description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
+      { title: "Tunefield" },
+      { name: "description", content: "In development." },
+      { name: "author", content: "Mark Adam Burnett" },
+      { name: "robots", content: "noindex" },
+      { property: "og:title", content: "Tunefield" },
+      { property: "og:description", content: "In development." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Tunefield — See your library, not just scroll it." },
-      { name: "twitter:description", content: "Free offline music analysis + DJ-prep tool. BPM, key, mood, LUFS, 3D neural matrix. By an Ableton Certified Trainer." },
-      { property: "og:image", content: "/og-image.png" },
-      { name: "twitter:image", content: "/og-image.png" },
     ],
     links: [
       {
