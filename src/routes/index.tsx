@@ -33,6 +33,11 @@ export const Route = createFileRoute("/")({
   component: TunefieldLanding,
 });
 
+// Master switch for the V1 release. While false, every "Download free V1" CTA
+// renders a muted "coming soon" state instead of pointing at the (not-yet-built)
+// #download target. Flip to true the moment the installer + USB build are live.
+const V1_AVAILABLE: boolean = false;
+
 function Wordmark({ className = "" }: { className?: string }) {
   return (
     <a href="#top" className={`inline-flex items-center gap-2 ${className}`}>
@@ -305,28 +310,37 @@ function Hero() {
             </motion.div>
           </div>
           <div className="mt-9 flex flex-wrap gap-3">
-            <motion.a
-              href="#download"
-              className="group relative inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-cream border border-cream/20 transition-all hover:-translate-y-0.5"
-              style={{ background: "linear-gradient(180deg, #11A5B3, #0E8D99)" }}
-              animate={
-                reducedMotion
-                  ? undefined
-                  : {
-                      scale: [1, 1.025, 1],
-                      boxShadow: [
-                        "0 0 0px 0px rgba(245,179,209,0)",
-                        "0 0 24px 4px rgba(245,179,209,0.35)",
-                        "0 0 0px 0px rgba(245,179,209,0)",
-                      ],
-                    }
-              }
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <span className="absolute -inset-2 -z-10 rounded-full bg-pink/0 group-hover:bg-pink/25 blur-xl transition-all duration-300" />
-              Download free V1
-              <ArrowRight className="h-4 w-4" />
-            </motion.a>
+            {V1_AVAILABLE ? (
+              <motion.a
+                href="#download"
+                className="group relative inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-cream border border-cream/20 transition-all hover:-translate-y-0.5"
+                style={{ background: "linear-gradient(180deg, #11A5B3, #0E8D99)" }}
+                animate={
+                  reducedMotion
+                    ? undefined
+                    : {
+                        scale: [1, 1.025, 1],
+                        boxShadow: [
+                          "0 0 0px 0px rgba(245,179,209,0)",
+                          "0 0 24px 4px rgba(245,179,209,0.35)",
+                          "0 0 0px 0px rgba(245,179,209,0)",
+                        ],
+                      }
+                }
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <span className="absolute -inset-2 -z-10 rounded-full bg-pink/0 group-hover:bg-pink/25 blur-xl transition-all duration-300" />
+                Download free V1
+                <ArrowRight className="h-4 w-4" />
+              </motion.a>
+            ) : (
+              <span
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-cream/65 border border-cream/15 bg-cream/5 cursor-default select-none"
+                aria-disabled="true"
+              >
+                Free V1 — coming soon
+              </span>
+            )}
             <a
               href="#waitlist"
               className="dashed-anim inline-flex items-center gap-2 rounded-full px-6 py-3 font-medium text-pink hover:text-charcoal hover:bg-pink/90 transition-colors border border-transparent"
@@ -753,11 +767,12 @@ function Pricing() {
       period: "forever",
       features:
         "Everything in V1: analysis, catalog, 5D matrix, repair, import. Open source.",
-      cta: "Download free V1",
+      cta: V1_AVAILABLE ? "Download free V1" : "Coming soon",
       ctaHref: "#download",
-      soon: false,
+      soon: !V1_AVAILABLE,
       featured: false,
       ctaStyle: "primary" as const,
+      disabled: !V1_AVAILABLE,
     },
     {
       name: "Pro",
@@ -770,6 +785,7 @@ function Pricing() {
       soon: true,
       featured: true,
       ctaStyle: "sheen" as const,
+      disabled: false,
     },
     {
       name: "Studio",
@@ -782,6 +798,7 @@ function Pricing() {
       soon: true,
       featured: false,
       ctaStyle: "pink-outline" as const,
+      disabled: false,
     },
   ];
   return (
@@ -821,18 +838,29 @@ function Pricing() {
             >
               {p.features}
             </p>
-            <a
-              href={p.ctaHref}
-              className={`mt-8 inline-flex justify-center items-center rounded-full px-5 py-3 font-medium transition-colors ${
-                p.ctaStyle === "sheen"
-                  ? "btn-sheen bg-pink text-charcoal hover:bg-pink/90"
-                  : p.ctaStyle === "pink-outline"
-                    ? "border-2 border-pink text-pink hover:bg-pink hover:text-charcoal"
-                    : "bg-teal text-cream hover:bg-teal/90"
-              }`}
-            >
-              {p.cta}
-            </a>
+            {p.disabled ? (
+              <span
+                className={`mt-8 inline-flex justify-center items-center rounded-full px-5 py-3 font-medium cursor-default select-none ${
+                  p.featured ? "bg-cream/10 text-cream/60" : "bg-charcoal/5 text-charcoal/50"
+                }`}
+                aria-disabled="true"
+              >
+                {p.cta}
+              </span>
+            ) : (
+              <a
+                href={p.ctaHref}
+                className={`mt-8 inline-flex justify-center items-center rounded-full px-5 py-3 font-medium transition-colors ${
+                  p.ctaStyle === "sheen"
+                    ? "btn-sheen bg-pink text-charcoal hover:bg-pink/90"
+                    : p.ctaStyle === "pink-outline"
+                      ? "border-2 border-pink text-pink hover:bg-pink hover:text-charcoal"
+                      : "bg-teal text-cream hover:bg-teal/90"
+                }`}
+              >
+                {p.cta}
+              </a>
+            )}
           </div>
         ))}
       </div>
@@ -1020,7 +1048,9 @@ function Footer() {
         <div>
           <div className="eyebrow !text-charcoal/50">Product</div>
           <ul className="mt-4 space-y-2 text-sm text-charcoal/80">
-            <li><a href="#download" className="hover:text-teal">Download</a></li>
+            {V1_AVAILABLE && (
+              <li><a href="#download" className="hover:text-teal">Download</a></li>
+            )}
             <li><a href="#" className="hover:text-teal">Documentation</a></li>
             <li><a href="https://github.com/tunefield/app" className="hover:text-teal">GitHub</a></li>
             <li><a href="#" className="hover:text-teal">Changelog</a></li>
