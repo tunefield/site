@@ -425,7 +425,7 @@ const FEATURES = [
   {
     icon: Library,
     title: "Multi-catalog",
-    body: "Separate catalogs per crate, per gig, per project. Import from Rekordbox or Apple Music.",
+    body: "Separate catalogs per crate, per gig, per project. Import your Rekordbox or Apple Music track lists (.txt / M3U8).",
   },
   {
     icon: Tags,
@@ -445,20 +445,20 @@ function Features() {
     {
       icon: Layers,
       title: "Texture channel",
-      body: "A sixth visual dimension. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Roughness becomes meaning.",
-      v2: true,
+      body: "A sixth visual dimension. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Free for everyone in V2.",
+      badge: "V2 · Free",
+    },
+    {
+      icon: ShoppingBag,
+      title: "Explore, then buy",
+      body: "Browse Beatport, Bandcamp, Traxsource and Juno without leaving Tunefield. Buy tracks straight into your catalog. A small share of each purchase funds development — so the free tier stays free.",
+      badge: "V2 · Free",
     },
     {
       icon: Glasses,
       title: "VR mode",
-      body: "WebXR-powered. Stand inside your library. Mixable tracks orbit you. Look at one to play it. Reach out to mix it.",
-      v2: true,
-    },
-    {
-      icon: ShoppingBag,
-      title: "Distributor integrations",
-      body: "Browse Beatport, Juno, Bandcamp, Traxsource without leaving Tunefield. Buy tracks that land straight into your catalog. Affiliate-funded — V1 stays free forever.",
-      v2: true,
+      body: "WebXR-powered. Stand inside your library — tracks orbit you, look to play, reach to mix. Built for classrooms, festivals and exhibitions.",
+      badge: "Studio",
     },
   ];
   return (
@@ -486,13 +486,13 @@ function FeatureCard({
   icon: Icon,
   title,
   body,
-  v2,
+  badge,
   featured,
 }: {
   icon: typeof Activity;
   title: string;
   body: string;
-  v2?: boolean;
+  badge?: string;
   featured?: boolean;
 }) {
   return (
@@ -503,9 +503,9 @@ function FeatureCard({
         featured ? "border-pink/40" : "border-cream/10"
       } hover:shadow-[0_20px_60px_-20px_rgba(17,165,179,0.5)] transition-shadow`}
     >
-      {v2 && (
+      {badge && (
         <span className="absolute top-4 right-4 text-[10px] font-mono uppercase tracking-widest bg-pink text-charcoal px-2 py-0.5 rounded-full">
-          V2
+          {badge}
         </span>
       )}
       <Icon
@@ -726,26 +726,29 @@ function V2Vision() {
         <DimensionCounter />
       </div>
       <div className="mt-16 grid md:grid-cols-3 gap-10">
-        <div className="border-l-2 border-pink pl-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-pink mb-2">VR mode</div>
-          <p className="text-cream/85 text-lg leading-relaxed">
-            WebXR-powered. Stand inside your library. Mixable tracks orbit you. Look at one
-            to play it. Reach out to mix it.
-          </p>
-        </div>
         <div className="border-l-2 border-teal pl-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-teal mb-2">Texture channel</div>
+          <div className="font-mono text-xs uppercase tracking-widest text-teal mb-2">Texture channel · free</div>
           <p className="text-cream/85 text-lg leading-relaxed">
             Six visual dimensions instead of five. Every sphere gains a surface material —
             roughness, glow, pattern, crystalline structure — driven by any metric you
-            choose. The matrix stops being abstract and starts feeling tactile.
+            choose. The matrix stops being abstract and starts feeling tactile. Free for
+            everyone.
+          </p>
+        </div>
+        <div className="border-l-2 border-pink pl-6">
+          <div className="font-mono text-xs uppercase tracking-widest text-pink mb-2">Explore, then buy · free</div>
+          <p className="text-cream/85 text-lg leading-relaxed">
+            Browse Beatport, Bandcamp, Traxsource and Juno without leaving Tunefield. Buy
+            straight into your catalog. A small share of each purchase funds development —
+            which is exactly how the free tier stays free.
           </p>
         </div>
         <div className="border-l-2 border-cream/40 pl-6">
-          <div className="font-mono text-xs uppercase tracking-widest text-cream/70 mb-2">Distributor integration</div>
+          <div className="font-mono text-xs uppercase tracking-widest text-cream/70 mb-2">VR mode · studio</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            Browse Beatport, Bandcamp, Traxsource without leaving Tunefield. Buy straight
-            into your catalog. Affiliate-funded so V1 stays free forever.
+            Stand inside your library — tracks orbit you, look to play, reach to mix.
+            WebXR-powered, built for classrooms, festivals and exhibitions. Coming to the
+            Studio tier when DJ schools ask for it.
           </p>
         </div>
       </div>
@@ -766,8 +769,8 @@ function Pricing() {
       price: "€0",
       period: "forever",
       features:
-        "Everything in V1: analysis, catalog, 5D matrix, repair, import. Open source.",
-      cta: V1_AVAILABLE ? "Download free V1" : "Coming soon",
+        "The core: audio analysis, catalog, the 3D neural matrix, CSV + PNG export. Open source. In V2 it also gains the texture channel and explore-and-buy — free.",
+      cta: V1_AVAILABLE ? "Download free" : "Coming soon",
       ctaHref: "#download",
       soon: !V1_AVAILABLE,
       featured: false,
@@ -777,27 +780,14 @@ function Pricing() {
     {
       name: "Pro",
       price: "€79",
-      period: "one-time, lifetime license",
+      period: "one-time, lifetime · €59 founder pre-order",
       features:
-        "Everything in Free + VR mode + texture channel (6th dimension) + distributor browsing + cloud sync + native exports (Rekordbox XML / Traktor NML / M3U8).",
-      cta: "Pre-order Pro for €59 →",
+        "The working-DJ workflow: Camelot-wheel filter, harmonic edges, BPM & key values, sortable table view, Library Repair, cloud sync, priority support, and native exports (Rekordbox XML / Traktor NML / M3U8).",
+      cta: "Pre-order Pro — €59 →",
       ctaHref: "#waitlist",
       soon: true,
       featured: true,
       ctaStyle: "sheen" as const,
-      disabled: false,
-    },
-    {
-      name: "Studio",
-      price: "€10/mo",
-      period: "or €100/yr",
-      features:
-        "For DJ schools + agencies. Multi-user libraries, team sharing, teaching mode, priority support.",
-      cta: "Notify me when Studio launches →",
-      ctaHref: "#waitlist",
-      soon: true,
-      featured: false,
-      ctaStyle: "pink-outline" as const,
       disabled: false,
     },
   ];
@@ -807,7 +797,7 @@ function Pricing() {
       <h2 className="mt-6 max-w-3xl text-4xl md:text-6xl font-display font-bold">
         Free forever, with room to grow.
       </h2>
-      <div className="mt-14 grid md:grid-cols-3 gap-6 items-stretch">
+      <div className="mt-14 grid md:grid-cols-2 gap-6 items-stretch max-w-4xl">
         {plans.map((p) => (
           <div
             key={p.name}
@@ -865,8 +855,14 @@ function Pricing() {
         ))}
       </div>
       <p className="mt-8 text-sm text-charcoal/60 max-w-2xl">
-        No subscriptions on Free or Pro. No data harvesting. V1 stays free forever —
-        that's a promise, not a marketing line.
+        No subscriptions. No data harvesting. The free core stays free forever — that's a
+        promise, not a marketing line. When V2 adds buy-through-Tunefield, a small share of
+        each purchase funds development, so the free tier never needs a paywall.
+      </p>
+      <p className="mt-3 text-sm text-charcoal/45 max-w-2xl">
+        Running a DJ school or academy? A multi-seat <strong className="text-charcoal/70">Studio</strong> tier
+        with team libraries, teaching mode and VR is coming once enough schools ask —{" "}
+        <a href="#waitlist" className="underline hover:text-teal">tell us you're interested</a>.
       </p>
     </Section>
   );
@@ -974,12 +970,12 @@ function Waitlist() {
       <div className="absolute inset-0 bg-teal-deep/30 pointer-events-none" />
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <h2 className="text-4xl md:text-6xl font-display font-bold text-cream">
-          Be first when V2 ships.
+          Be first. Founder price inside.
         </h2>
         <p className="mt-6 text-lg text-cream/70 max-w-2xl mx-auto">
-          VR mode, distributor browsing, cloud sync. Pre-order opens 2 months before launch
-          at €59 (€20 off lifetime). Waitlist subscribers get first access and a discount
-          code.
+          The free core lands first — you'll get it the day it ships. Waitlist subscribers
+          also get the Pro founder price: <strong className="text-cream">€59 lifetime</strong> (€20 off)
+          for the full DJ workflow, plus first access and a discount code.
         </p>
         {/* [TODO: paste Buttondown/ConvertKit embed code here] */}
         <form
