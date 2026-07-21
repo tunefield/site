@@ -1137,7 +1137,11 @@ function Placeholder() {
           Mac &amp; Windows · launching autumn 2026
         </p>
         <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40">
-          © {new Date().getFullYear()} Mark Burnett
+          © {new Date().getFullYear()}{" "}
+          <a href="/preview" className="text-inherit no-underline" aria-label="Preview">
+            Mark
+          </a>{" "}
+          Burnett
         </p>
       </div>
     </div>
@@ -1147,7 +1151,7 @@ function Placeholder() {
 // Original full landing page — kept here so flipping back is a one-liner change
 // to TunefieldLanding above. Do not delete.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function FullSite() {
+export function FullSite() {
   return (
     <div className="bg-cream min-h-screen">
       <Nav />
