@@ -457,7 +457,7 @@ function Features() {
     {
       icon: Glasses,
       title: "VR mode",
-      body: "WebXR-powered. Stand inside your library — tracks orbit you, look to play, reach to mix. Built for classrooms, festivals and exhibitions.",
+      body: "WebXR-powered. Stand inside your Tunefield — tracks orbit you, look to play, reach to mix. Built for classrooms, festivals and exhibitions.",
       badge: "Studio",
     },
   ];
@@ -746,7 +746,7 @@ function V2Vision() {
         <div className="border-l-2 border-cream/40 pl-6">
           <div className="font-mono text-xs uppercase tracking-widest text-cream/70 mb-2">VR mode · studio</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            Stand inside your library — tracks orbit you, look to play, reach to mix.
+            Stand inside your Tunefield — tracks orbit you, look to play, reach to mix.
             WebXR-powered, built for classrooms, festivals and exhibitions. Coming to the
             Studio tier when DJ schools ask for it.
           </p>
