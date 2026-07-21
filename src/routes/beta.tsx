@@ -47,15 +47,21 @@ function TallyEmbed() {
     );
   }
 
+  const embedSrc = `https://tally.so/embed/${TALLY_FORM_ID}?alignLeft=1&hideTitle=1&dynamicHeight=1`;
   return (
-    <iframe
-      data-tally-src={`https://tally.so/embed/${TALLY_FORM_ID}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`}
-      loading="lazy"
-      width="100%"
-      height={520}
-      title="Tunefield beta application"
-      className="w-full"
-    />
+    <div className="rounded-2xl overflow-hidden bg-white">
+      <iframe
+        // src set directly so the form loads even if embed.js hasn't run yet;
+        // data-tally-src lets embed.js take over for dynamic height once loaded.
+        src={embedSrc}
+        data-tally-src={embedSrc}
+        loading="lazy"
+        width="100%"
+        height={700}
+        title="Tunefield beta application"
+        className="w-full block"
+      />
+    </div>
   );
 }
 
