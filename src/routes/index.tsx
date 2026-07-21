@@ -177,8 +177,8 @@ function HeadlineSequence({ reduced }: { reduced: boolean }) {
 
 // Typewriter subhead with the pink underline kicking in as the key phrase types out.
 const SUBHEAD_TEXT =
-  "Teleport into a 5-dimensional music universe, defined by you. Every track is a star — positioned by BPM, key, mood, energy, loudness, danceability. Free, offline, instant.";
-const SUBHEAD_HIGHLIGHT = "5-dimensional music universe";
+  "Teleport into a 3D field of your own library, laid out by the metrics you choose — BPM, key, mood, energy, loudness, danceability. Free, offline, instant.";
+const SUBHEAD_HIGHLIGHT = "3D field of your own library";
 const SUBHEAD_HIGHLIGHT_START = SUBHEAD_TEXT.indexOf(SUBHEAD_HIGHLIGHT);
 const SUBHEAD_HIGHLIGHT_END = SUBHEAD_HIGHLIGHT_START + SUBHEAD_HIGHLIGHT.length;
 
@@ -408,7 +408,7 @@ function Problem() {
       <p className="mt-8 max-w-2xl text-lg text-charcoal/75">
         Every DJ has 1,000+ tracks they paid for, half of which they've forgotten.
         Rekordbox, Serato, Traktor — all lists, all scrolling. Tunefield drops you
-        inside a five-dimensional universe of your own library, so what mixes with
+        inside a 3D field of your own library, so what mixes with
         what isn't hidden three pages down. It's right next to you.
       </p>
     </Section>
@@ -419,7 +419,7 @@ const FEATURES = [
   {
     icon: Activity,
     title: "Audio analysis",
-    body: "BPM, key (Camelot), LUFS loudness, mood, danceability, valence, vocals, timbre — every track, 60 seconds, fully local.",
+    body: "BPM, key (Camelot), LUFS loudness, mood, danceability, valence, vocal presence, timbre — every track, 60 seconds, fully local.",
   },
   {
     icon: SlidersHorizontal,
@@ -428,8 +428,8 @@ const FEATURES = [
   },
   {
     icon: Boxes,
-    title: "5D Neural Matrix",
-    body: "Every track is a star in a 5-dimensional universe — X, Y, Z, color, size. Fly through it. Click to play. Texture lands in V2.",
+    title: "3D Neural Matrix",
+    body: "Every track is a star in a 3D field — X, Y, Z, plus color and size as extra channels. Fly through it. Click to play. Texture lands in V2.",
   },
   {
     icon: Library,
@@ -454,7 +454,7 @@ function Features() {
     {
       icon: Layers,
       title: "Texture channel",
-      body: "A sixth visual dimension. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Free for everyone in V2.",
+      body: "A sixth visual channel. Every sphere gains a surface — matte, glossy, fibrous, crystalline, granular — driven by any metric you pick. Free for everyone in V2.",
       badge: "V2 · Free",
     },
     {
@@ -591,9 +591,9 @@ function MatrixSection() {
   return (
     <section id="matrix" ref={ref} className="bg-cream py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <p className="eyebrow">The 5D Neural Matrix</p>
+        <p className="eyebrow">The 3D Neural Matrix</p>
         <h2 className="mt-4 max-w-4xl text-3xl md:text-5xl font-display font-bold text-charcoal">
-          Five dimensions. One universe.{" "}
+          Three axes. Five channels.{" "}
           <span className="pink-underline text-charcoal">Your library.</span>
         </h2>
         <div
@@ -656,8 +656,8 @@ function MatrixSection() {
         <div className="mt-16 grid md:grid-cols-3 gap-8">
           {[
             ["X / Y / Z", "Three spatial axes — pick any metric for each"],
-            ["Color + size", "Two more dimensions: paint by mood, scale by energy"],
-            ["Texture (V2)", "The sixth dimension — surface material per sphere"],
+            ["Color + size", "Two more channels: paint by mood, scale by energy"],
+            ["Texture (V2)", "A sixth channel — surface material per sphere"],
           ].map(([k, v]) => (
             <div key={k}>
               <div className="font-mono text-sm text-teal">{k}</div>
@@ -718,7 +718,7 @@ function DimensionCounter() {
         )}
       </div>
       <p className="mt-4 max-w-xl text-cream/75 text-lg">
-        Five dimensions today. Six when V2 ships.
+        Five channels today. Six when V2 ships.
       </p>
     </div>
   );
@@ -738,7 +738,7 @@ function V2Vision() {
         <div className="border-l-2 border-teal pl-6">
           <div className="font-mono text-xs uppercase tracking-widest text-teal mb-2">Texture channel · free</div>
           <p className="text-cream/85 text-lg leading-relaxed">
-            Six visual dimensions instead of five. Every sphere gains a surface material —
+            Six visual channels instead of five. Every sphere gains a surface material —
             roughness, glow, pattern, crystalline structure — driven by any metric you
             choose. The matrix stops being abstract and starts feeling tactile. Free for
             everyone.
@@ -938,7 +938,7 @@ const FAQS = [
   ],
   [
     "What's the difference between this and Mixed In Key?",
-    "Mixed In Key does keys well. We do keys plus mood, energy, LUFS, danceability, valence, vocals, timbre, and a 5D spatial map — and we're free.",
+    "Mixed In Key does keys well. We do keys plus mood, energy, LUFS, danceability, valence, vocal presence, timbre, and a 3D spatial map — and we're free.",
   ],
 ];
 
@@ -1051,7 +1051,7 @@ function Footer() {
         <div>
           <Wordmark />
           <p className="mt-4 text-sm text-charcoal/70 max-w-xs">
-            Fly through your music. Five dimensions, defined by you. Six in V2.
+            Fly through your music. Five channels, defined by you. Six in V2.
           </p>
           <p className="mt-4 text-xs text-charcoal/50">© 2026 Mark Burnett. AGPL v3.</p>
         </div>

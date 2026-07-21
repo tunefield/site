@@ -16,7 +16,7 @@ Tunefield analyses every track in your library — BPM, key, mood, energy, dance
 
 ## Long description (≈120 words)
 
-Every working DJ owns thousands of tracks they've forgotten they have. Rekordbox, Serato and Traktor are all built around scrolling lists — and lists hide what's adjacent. Tunefield takes a different approach: it analyses your library locally (BPM, Camelot key, LUFS, mood, energy, danceability, vocals, timbre) and renders it as a 3D "neural matrix" — every track a star, positioned by the metrics you choose, connected by edges to the tracks it mixes with. You explore your own collection spatially, spot the harmonic path through a set, and rediscover music you already paid for. It runs entirely on your machine — no account, no cloud, no subscription. The core is free and open-source; a one-time Pro tier adds the full DJ-prep workflow.
+Every working DJ owns thousands of tracks they've forgotten they have. Rekordbox, Serato and Traktor are all built around scrolling lists — and lists hide what's adjacent. Tunefield takes a different approach: it analyses your library locally (BPM, Camelot key, LUFS, mood, energy, danceability, vocal presence, timbre) and renders it as a 3D "neural matrix" — every track a star, positioned by the metrics you choose, connected by edges to the tracks it mixes with. You explore your own collection spatially, spot the harmonic path through a set, and rediscover music you already paid for. It runs entirely on your machine — no account, no cloud, no subscription. The core is free and open-source; a one-time Pro tier adds the full DJ-prep workflow.
 
 ## Key facts
 
