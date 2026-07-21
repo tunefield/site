@@ -962,7 +962,6 @@ function FAQ() {
 function Waitlist() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const count = 1247;
   return (
     <section id="waitlist" className="relative overflow-hidden bg-teal-deep text-cream py-24 md:py-32">
       <div className="absolute inset-0 opacity-25 pointer-events-none">
@@ -1006,21 +1005,7 @@ function Waitlist() {
             {submitted ? "You're in ✓" : (<>Join the waitlist <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></>)}
           </button>
         </form>
-        <div className="mt-10 max-w-md mx-auto">
-          <div className="flex items-center gap-3 text-cream/80 text-sm font-mono">
-            <div className="flex-1 h-1.5 bg-cream/10 rounded-full overflow-hidden">
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: `${Math.min(100, (count / 2000) * 100)}%` }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                className="h-full bg-teal"
-              />
-            </div>
-            <span>{count.toLocaleString()} DJs on the waitlist</span>
-          </div>
-        </div>
-        <p className="mt-4 text-sm text-cream/50">
+        <p className="mt-8 text-sm text-cream/50">
           No spam. One email when V2 ships. Unsubscribe in one click.
         </p>
       </div>
