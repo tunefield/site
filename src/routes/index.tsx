@@ -1080,10 +1080,10 @@ function Footer() {
             ))}
           </div>
           <a
-            href="mailto:hello@tunefield.app"
+            href="mailto:mark@tunefield.app"
             className="mt-4 inline-block text-sm text-charcoal/80 hover:text-teal"
           >
-            hello@tunefield.app
+            mark@tunefield.app
           </a>
         </div>
       </div>

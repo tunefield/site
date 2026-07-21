@@ -109,7 +109,7 @@ function PressPage() {
         </h2>
         <p className="mt-4 text-charcoal/75">
           Press &amp; general enquiries:{" "}
-          <a href="mailto:hello@tunefield.app" className="text-teal underline">hello@tunefield.app</a>
+          <a href="mailto:mark@tunefield.app" className="text-teal underline">mark@tunefield.app</a>
           <br />
           Source: <a href="https://github.com/tunefield/app" className="text-teal underline" target="_blank" rel="noreferrer">github.com/tunefield/app</a>
         </p>

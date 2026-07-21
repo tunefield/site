@@ -10,7 +10,7 @@ The controller under the GDPR is:
 
 Mark Burnett — Tunefield
 [street and number], [postcode city], Germany
-Email: hello@tunefield.app
+Email: mark@tunefield.app
 
 ## 2. Local-first by design
 
@@ -22,7 +22,7 @@ The website is hosted by **Vercel Inc.** (USA). Loading a page processes technic
 
 ## 4. Beta application form (Tally)
 
-The "Apply for beta testing" form is provided by **Tally** (EU) and stores what you enter (name, email, setup details) **in the EU**. We use it only to contact you about the beta and — if you separately opt in — the launch. Legal basis: **Art. 6(1)(a) GDPR (consent)**. You can withdraw consent anytime by emailing hello@tunefield.app.
+The "Apply for beta testing" form is provided by **Tally** (EU) and stores what you enter (name, email, setup details) **in the EU**. We use it only to contact you about the beta and — if you separately opt in — the launch. Legal basis: **Art. 6(1)(a) GDPR (consent)**. You can withdraw consent anytime by emailing mark@tunefield.app.
 
 ## 5. Waitlist / newsletter (planned: Buttondown)
 
@@ -42,7 +42,7 @@ The site sets **no** marketing or tracking cookies — only technically necessar
 
 ## 9. Your rights
 
-Under the GDPR you have the rights to access, rectification, erasure, restriction, data portability, and to withdraw consent at any time, plus the right to lodge a complaint with a supervisory authority. Contact hello@tunefield.app.
+Under the GDPR you have the rights to access, rectification, erasure, restriction, data portability, and to withdraw consent at any time, plus the right to lodge a complaint with a supervisory authority. Contact mark@tunefield.app.
 
 ## 10. Retention
 

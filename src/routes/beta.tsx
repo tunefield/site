@@ -49,8 +49,8 @@ function TallyEmbed() {
         </p>
         <p className="mt-3 text-charcoal/70">
           The application form is being finalised. In the meantime, email{" "}
-          <a href="mailto:hello@tunefield.app" className="underline hover:text-teal">
-            hello@tunefield.app
+          <a href="mailto:mark@tunefield.app" className="underline hover:text-teal">
+            mark@tunefield.app
           </a>{" "}
           to register your interest.
         </p>
@@ -100,8 +100,8 @@ function BetaPage() {
           We use what you submit only to contact you about the beta (and, if you opt in,
           the launch). We never sell your data and store the minimum needed. You can
           withdraw consent anytime at{" "}
-          <a href="mailto:hello@tunefield.app" className="underline hover:text-teal">
-            hello@tunefield.app
+          <a href="mailto:mark@tunefield.app" className="underline hover:text-teal">
+            mark@tunefield.app
           </a>
           . See our{" "}
           <a href="/legal/datenschutz" className="underline hover:text-teal">Datenschutzerklärung</a>{" "}

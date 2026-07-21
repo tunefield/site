@@ -10,7 +10,7 @@ Verantwortlicher im Sinne der DSGVO ist:
 
 Mark Burnett — Tunefield
 [Straße und Hausnummer], [PLZ Ort], Deutschland
-E-Mail: hello@tunefield.app
+E-Mail: mark@tunefield.app
 
 ## 2. Grundsatz: local-first
 
@@ -22,7 +22,7 @@ Die Website wird bei **Vercel Inc.** (USA) gehostet. Beim Aufruf werden technisc
 
 ## 4. Beta-Anmeldeformular (Tally)
 
-Das Formular unter „Apply for beta testing" wird über **Tally** (Tally BV, EU) bereitgestellt und speichert die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Angaben zu Ihrem Setup) in der EU. Wir verwenden diese Daten ausschließlich, um Sie zum Beta-Programm zu kontaktieren, und — sofern Sie dies gesondert bestätigen — um Sie zum Launch zu informieren. Rechtsgrundlage: **Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)**. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft per E-Mail an hello@tunefield.app widerrufen. Tally-Datenschutz: <https://tally.so/help/gdpr>.
+Das Formular unter „Apply for beta testing" wird über **Tally** (Tally BV, EU) bereitgestellt und speichert die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Angaben zu Ihrem Setup) in der EU. Wir verwenden diese Daten ausschließlich, um Sie zum Beta-Programm zu kontaktieren, und — sofern Sie dies gesondert bestätigen — um Sie zum Launch zu informieren. Rechtsgrundlage: **Art. 6 Abs. 1 lit. a DSGVO (Einwilligung)**. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft per E-Mail an mark@tunefield.app widerrufen. Tally-Datenschutz: <https://tally.so/help/gdpr>.
 
 ## 5. Newsletter / Warteliste (geplant: Buttondown)
 
@@ -42,7 +42,7 @@ Die Website setzt **keine** Marketing- oder Tracking-Cookies. Es werden lediglic
 
 ## 9. Ihre Rechte
 
-Sie haben nach der DSGVO das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen (Art. 7 Abs. 3). Zudem besteht ein Beschwerderecht bei einer Aufsichtsbehörde (Art. 77). Anfragen richten Sie bitte an hello@tunefield.app.
+Sie haben nach der DSGVO das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) sowie das Recht, eine erteilte Einwilligung jederzeit zu widerrufen (Art. 7 Abs. 3). Zudem besteht ein Beschwerderecht bei einer Aufsichtsbehörde (Art. 77). Anfragen richten Sie bitte an mark@tunefield.app.
 
 ## 10. Speicherdauer
 

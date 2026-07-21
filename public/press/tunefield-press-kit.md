@@ -2,7 +2,7 @@
 
 **See your library, not just scroll it.**
 
-*Last updated: July 2026 · Contact: hello@tunefield.app · [tunefield.dj](https://tunefield.dj)*
+*Last updated: July 2026 · Contact: mark@tunefield.app · [tunefield.dj](https://tunefield.dj)*
 
 ---
 
@@ -61,6 +61,6 @@ Downloadable brand and media assets (in this folder / on the press page):
 
 - Website: [tunefield.dj](https://tunefield.dj) / [tunefield.app](https://tunefield.app)
 - Source: [github.com/tunefield/app](https://github.com/tunefield/app)
-- Press / general: **hello@tunefield.app**
+- Press / general: **mark@tunefield.app**
 
 *Please don't alter the logo colours or recolour the wordmark's dot. Screenshots and the demo clip may be used freely in coverage of Tunefield.*
