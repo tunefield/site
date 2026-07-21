@@ -112,14 +112,15 @@ function useHeroPrefersReducedMotion() {
   return reduced;
 }
 
-// Cinematic looping headline. Phrases cycle: "ARE YOU READY?" -> "NEXT GENERATION"
-// -> "MUSIC EXPLORATION" -> "IS HERE." (climactic pink). Each phrase enters scale+blur->sharp
+// Cinematic looping headline. Phrases cycle: "ARE YOU READY?" -> "NEXT GENERATION" ->
+// "MUSIC EXPLORATION" -> "AND CURATION" -> "IS HERE." (climactic pink). Each phrase enters scale+blur->sharp
 // and exits with a tiny scale-up + blur-out before the next one slams in.
 const HEADLINE_PHRASES: { text: string; pink?: boolean; holdMs: number }[] = [
-  { text: "ARE YOU READY?", holdMs: 1600 },
-  { text: "NEXT GENERATION", holdMs: 1600 },
-  { text: "MUSIC EXPLORATION", holdMs: 1700 },
-  { text: "IS HERE.", pink: true, holdMs: 2200 },
+  { text: "ARE YOU READY?", holdMs: 3200 },
+  { text: "NEXT GENERATION", holdMs: 3000 },
+  { text: "MUSIC EXPLORATION", holdMs: 3200 },
+  { text: "AND CURATION", holdMs: 3000 },
+  { text: "IS HERE.", pink: true, holdMs: 4400 },
 ];
 
 function HeadlineSequence({ reduced }: { reduced: boolean }) {
@@ -137,7 +138,7 @@ function HeadlineSequence({ reduced }: { reduced: boolean }) {
   return (
     <div
       className="relative hero-headline leading-[1] h-[1.05em] md:h-[1em]"
-      aria-label="Are you ready? Next generation music exploration is here."
+      aria-label="Are you ready? Next generation music exploration and curation is here."
     >
       <AnimatePresence mode="wait">
         <motion.span
@@ -1126,8 +1127,22 @@ function Placeholder() {
         <h1 className="font-display font-bold text-cream text-6xl md:text-8xl tracking-tight drop-shadow-[0_4px_24px_rgba(14,42,42,0.6)]">
           tunefield<span className="text-pink">.</span>
         </h1>
-        <p className="mt-8 font-mono text-xs uppercase tracking-[0.3em] text-cream/70">
-          In development
+        <a
+          href={
+            "mailto:hello@tunefield.app" +
+            "?subject=" + encodeURIComponent("Beta Tester Application") +
+            "&body=" + encodeURIComponent(
+              "Hi Mark,\n\nI'd love to help beta test Tunefield.\n\n" +
+              "Name:\nDJ / producer background:\nOS (Mac / Windows):\n" +
+              "Rough library size (tracks):\nWhat I use now (Rekordbox / Serato / Traktor / …):\n\nThanks!"
+            )
+          }
+          className="mt-10 inline-flex items-center gap-2 rounded-full bg-teal text-cream px-7 py-3.5 font-medium tracking-wide hover:bg-teal/90 transition-colors shadow-[0_12px_44px_-12px_rgba(17,165,179,0.7)]"
+        >
+          Apply for beta testing <span className="text-pink">→</span>
+        </a>
+        <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.28em] text-cream/55">
+          Mac &amp; Windows · launching autumn 2026
         </p>
         <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40">
           © {new Date().getFullYear()} Mark Adam Burnett
