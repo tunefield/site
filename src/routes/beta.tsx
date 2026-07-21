@@ -103,7 +103,10 @@ function BetaPage() {
           <a href="mailto:hello@tunefield.app" className="underline hover:text-teal">
             hello@tunefield.app
           </a>
-          . Full privacy policy coming with launch.
+          . See our{" "}
+          <a href="/legal/datenschutz" className="underline hover:text-teal">Datenschutzerklärung</a>{" "}
+          and{" "}
+          <a href="/legal/impressum" className="underline hover:text-teal">Impressum</a>.
         </p>
       </div>
     </div>

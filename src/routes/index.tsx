@@ -1152,13 +1152,19 @@ function Placeholder() {
         <p className="mt-5 font-mono text-[11px] uppercase tracking-[0.28em] text-cream/55">
           Mac &amp; Windows · launching autumn 2026
         </p>
-        <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40">
-          © {new Date().getFullYear()}{" "}
-          <a href="/preview" className="text-inherit no-underline" aria-label="Preview">
-            Mark
-          </a>{" "}
-          Burnett
-        </p>
+        <div className="absolute bottom-6 inset-x-0 flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40">
+          <div className="flex gap-4">
+            <a href="/legal/impressum" className="hover:text-cream/70 transition-colors">Impressum</a>
+            <a href="/legal/datenschutz" className="hover:text-cream/70 transition-colors">Datenschutz</a>
+          </div>
+          <p>
+            © {new Date().getFullYear()}{" "}
+            <a href="/preview" className="text-inherit no-underline" aria-label="Preview">
+              Mark
+            </a>{" "}
+            Burnett
+          </p>
+        </div>
       </div>
     </div>
   );
