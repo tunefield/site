@@ -38,10 +38,10 @@ export const Route = createFileRoute("/")({
 // #download target. Flip to true the moment the installer + USB build are live.
 const V1_AVAILABLE: boolean = false;
 
-function Wordmark({ className = "" }: { className?: string }) {
+function Wordmark({ className = "", size = "text-xl" }: { className?: string; size?: string }) {
   return (
     <a href="#top" className={`inline-flex items-center gap-2 ${className}`}>
-      <span className="font-display font-bold text-charcoal text-xl tracking-tight">
+      <span className={`font-display font-bold text-charcoal ${size} tracking-tight`}>
         tunefield<span className="text-pink">.</span>
       </span>
     </a>
@@ -70,8 +70,8 @@ function Nav() {
           : "bg-cream/60 backdrop-blur-sm"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <Wordmark />
+      <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
+        <Wordmark size="text-[2.125rem]" />
         <nav className="hidden md:flex items-center gap-8 text-sm text-charcoal/80">
           {links.map(([label, href]) => (
             <a key={href} href={href} className="hover:text-teal transition-colors">
