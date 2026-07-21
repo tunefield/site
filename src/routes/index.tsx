@@ -38,6 +38,14 @@ export const Route = createFileRoute("/")({
 // #download target. Flip to true the moment the installer + USB build are live.
 const V1_AVAILABLE: boolean = false;
 
+// Real waitlist size. We only show the live number once it's meaningful social
+// proof (>= WAITLIST_METRICS_AT); below that we show an honest CTA line instead of
+// a small/fabricated-looking count. Set this to the TRUE current number.
+// TODO: when the waitlist backend is live, replace with a fetch from the real
+// source (e.g. /api/waitlist-count backed by the Buttondown subscriber count).
+const WAITLIST_COUNT = 0;
+const WAITLIST_METRICS_AT = 1000;
+
 function Wordmark({ className = "", size = "text-xl" }: { className?: string; size?: string }) {
   return (
     <a href="#top" className={`inline-flex items-center gap-2 ${className}`}>
@@ -1005,7 +1013,27 @@ function Waitlist() {
             {submitted ? "You're in ✓" : (<>Join the waitlist <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></>)}
           </button>
         </form>
-        <p className="mt-8 text-sm text-cream/50">
+        {WAITLIST_COUNT >= WAITLIST_METRICS_AT ? (
+          <div className="mt-10 max-w-md mx-auto">
+            <div className="flex items-center gap-3 text-cream/80 text-sm font-mono">
+              <div className="flex-1 h-1.5 bg-cream/10 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${Math.min(100, (WAITLIST_COUNT / (Math.ceil(WAITLIST_COUNT / 1000) * 1000)) * 100)}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                  className="h-full bg-teal"
+                />
+              </div>
+              <span>{WAITLIST_COUNT.toLocaleString()} DJs on the waitlist</span>
+            </div>
+          </div>
+        ) : (
+          <p className="mt-8 font-mono text-xs uppercase tracking-[0.25em] text-cream/55">
+            Be one of the first — join the waitlist
+          </p>
+        )}
+        <p className="mt-4 text-sm text-cream/50">
           No spam. One email when V2 ships. Unsubscribe in one click.
         </p>
       </div>
