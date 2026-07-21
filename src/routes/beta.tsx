@@ -21,13 +21,24 @@ const TALLY_FORM_ID = "LZqM2J";
 function TallyEmbed() {
   useEffect(() => {
     if (TALLY_FORM_ID === "REPLACE_WITH_TALLY_FORM_ID") return;
+    const w = window as unknown as { Tally?: { loadEmbeds: () => void } };
+    const run = () => w.Tally?.loadEmbeds();
+    if (w.Tally) {
+      run();
+      return;
+    }
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[src="https://tally.so/widgets/embed.js"]',
+    );
+    if (existing) {
+      existing.addEventListener("load", run);
+      return () => existing.removeEventListener("load", run);
+    }
     const s = document.createElement("script");
     s.src = "https://tally.so/widgets/embed.js";
     s.async = true;
+    s.onload = run;
     document.body.appendChild(s);
-    return () => {
-      s.remove();
-    };
   }, []);
 
   if (TALLY_FORM_ID === "REPLACE_WITH_TALLY_FORM_ID") {
@@ -49,17 +60,17 @@ function TallyEmbed() {
 
   const embedSrc = `https://tally.so/embed/${TALLY_FORM_ID}?alignLeft=1&hideTitle=1&dynamicHeight=1`;
   return (
-    <div className="rounded-2xl overflow-hidden bg-white">
+    <div className="rounded-2xl overflow-hidden bg-white shadow-[0_30px_80px_-30px_rgba(0,0,0,0.5)]">
       <iframe
-        // src set directly so the form loads even if embed.js hasn't run yet;
-        // data-tally-src lets embed.js take over for dynamic height once loaded.
-        src={embedSrc}
+        // data-tally-src + Tally.loadEmbeds() (in the effect above) drives dynamic
+        // height, so the iframe grows to fit the whole form — no inner scroll.
         data-tally-src={embedSrc}
         loading="lazy"
         width="100%"
-        height={700}
+        height={320}
         title="Tunefield beta application"
         className="w-full block"
+        style={{ border: 0 }}
       />
     </div>
   );
