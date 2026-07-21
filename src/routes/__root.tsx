@@ -74,7 +74,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Tunefield" },
       { name: "description", content: "In development." },
-      { name: "author", content: "Mark Adam Burnett" },
+      { name: "author", content: "Mark Burnett" },
       { name: "robots", content: "noindex" },
       { property: "og:title", content: "Tunefield" },
       { property: "og:description", content: "In development." },

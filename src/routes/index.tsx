@@ -901,7 +901,7 @@ function About() {
               target="_blank"
               rel="noreferrer"
             >
-              Mark Adam Burnett.
+              Mark Burnett.
             </a>
           </p>
         </div>
@@ -1128,15 +1128,7 @@ function Placeholder() {
           tunefield<span className="text-pink">.</span>
         </h1>
         <a
-          href={
-            "mailto:hello@tunefield.app" +
-            "?subject=" + encodeURIComponent("Beta Tester Application") +
-            "&body=" + encodeURIComponent(
-              "Hi Mark,\n\nI'd love to help beta test Tunefield.\n\n" +
-              "Name:\nDJ / producer background:\nOS (Mac / Windows):\n" +
-              "Rough library size (tracks):\nWhat I use now (Rekordbox / Serato / Traktor / …):\n\nThanks!"
-            )
-          }
+          href="/beta"
           className="mt-10 inline-flex items-center gap-2 rounded-full bg-teal text-cream px-7 py-3.5 font-medium tracking-wide hover:bg-teal/90 transition-colors shadow-[0_12px_44px_-12px_rgba(17,165,179,0.7)]"
         >
           Apply for beta testing <span className="text-pink">→</span>
@@ -1145,7 +1137,7 @@ function Placeholder() {
           Mac &amp; Windows · launching autumn 2026
         </p>
         <p className="absolute bottom-6 inset-x-0 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-cream/40">
-          © {new Date().getFullYear()} Mark Adam Burnett
+          © {new Date().getFullYear()} Mark Burnett
         </p>
       </div>
     </div>
