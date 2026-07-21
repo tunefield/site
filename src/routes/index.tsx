@@ -1088,9 +1088,12 @@ function Footer() {
         </div>
       </div>
       <div className="mx-auto max-w-7xl px-6 mt-12 flex flex-wrap gap-x-6 gap-y-2 text-xs text-charcoal/50">
-        <a href="/privacy" className="hover:text-teal">Privacy</a>
-        <a href="/terms" className="hover:text-teal">Terms</a>
-        <a href="#" className="hover:text-teal">Press kit</a>
+        <a href="/legal/impressum" className="hover:text-teal">Impressum</a>
+        <a href="/legal/datenschutz" className="hover:text-teal">Datenschutz</a>
+        <a href="/legal/agb" className="hover:text-teal">AGB</a>
+        <a href="/legal/privacy" className="hover:text-teal">Privacy</a>
+        <a href="/legal/terms" className="hover:text-teal">Terms</a>
+        <a href="/press" className="hover:text-teal">Press kit</a>
       </div>
     </footer>
   );
