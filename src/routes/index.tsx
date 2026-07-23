@@ -302,7 +302,7 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            5-Dimensional music visualisation
+            3D music visualisation
           </motion.p>
           <div className="mt-6">
             <HeadlineSequence reduced={reducedMotion} />
