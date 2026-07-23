@@ -13,7 +13,7 @@ export const Route = createFileRoute("/preview")({
 });
 
 // Change this to rotate the preview password, then redeploy.
-const PREVIEW_PASSWORD = "tunefield-preview-2026";
+const PREVIEW_PASSWORD = "tunefield.";
 const STORAGE_KEY = "tf-preview-unlocked";
 
 function PreviewGate() {
