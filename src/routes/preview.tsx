@@ -6,7 +6,7 @@ export const Route = createFileRoute("/preview")({
   component: PreviewGate,
   head: () => ({
     meta: [
-      { title: "Tunefield — Preview" },
+      { title: "tunefield. — Preview" },
       { name: "robots", content: "noindex, nofollow" },
     ],
   }),

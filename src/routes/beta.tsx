@@ -5,7 +5,7 @@ export const Route = createFileRoute("/beta")({
   component: BetaPage,
   head: () => ({
     meta: [
-      { title: "Apply for beta testing — Tunefield" },
+      { title: "tunefield. — Apply for beta testing" },
       { name: "description", content: "Apply to help beta test Tunefield." },
       { name: "robots", content: "noindex" },
     ],

@@ -10,7 +10,7 @@ const DOCS: Record<string, string> = { impressum, datenschutz, agb, privacy, ter
 export const Route = createFileRoute("/legal/$doc")({
   component: LegalPage,
   head: () => ({
-    meta: [{ title: "Tunefield — Legal" }, { name: "robots", content: "noindex" }],
+    meta: [{ title: "tunefield. — Legal" }, { name: "robots", content: "noindex" }],
   }),
 });
 

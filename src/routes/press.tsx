@@ -4,7 +4,7 @@ export const Route = createFileRoute("/press")({
   component: PressPage,
   head: () => ({
     meta: [
-      { title: "Tunefield — Press kit" },
+      { title: "tunefield. — Press kit" },
       { name: "description", content: "Tunefield press kit — assets, facts, contact." },
       { name: "robots", content: "noindex" },
     ],

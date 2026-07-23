@@ -72,11 +72,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Tunefield" },
+      { title: "tunefield." },
       { name: "description", content: "In development." },
       { name: "author", content: "Mark Burnett" },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Tunefield" },
+      { property: "og:title", content: "tunefield." },
       { property: "og:description", content: "In development." },
       { property: "og:type", content: "website" },
     ],
